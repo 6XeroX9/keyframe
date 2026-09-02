@@ -1,4 +1,4 @@
-/* ─── AEPath CINEMATIC PAGE TRANSITIONS ─────────────────────────────────────── */
+/* ─── Keyframe CINEMATIC PAGE TRANSITIONS ─────────────────────────────────────── */
 /* LEAVE : bars slam in from alternating sides, center-first  (shutter CLOSE)     */
 /* ENTER : bars peel away center-first, revealing the page    (shutter OPEN)      */
 /*                                                                                 */

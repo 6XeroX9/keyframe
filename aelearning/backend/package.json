@@ -1,7 +1,7 @@
 {
-  "name": "aepath-backend",
+  "name": "keyframe-backend",
   "version": "1.0.0",
-  "description": "AEPath learning platform backend",
+  "description": "Keyframe learning platform backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

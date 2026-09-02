@@ -1,4 +1,4 @@
-/* ─── AEPATH PROGRESS ────────────────────────────────────────────────────────
+/* ─── KEYFRAME PROGRESS ────────────────────────────────────────────────────────
    Guest-friendly progress tracking. No auth, no backend — just localStorage.
    Two sets: watched video ids, saved (bookmarked) items as "type:id" keys. */
 

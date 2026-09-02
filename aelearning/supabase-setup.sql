@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────────────────────────────────
--- AEPath — Supabase SQL Setup
+-- Keyframe — Supabase SQL Setup
 -- Run this entire script in the Supabase SQL Editor (one shot).
 -- It uses IF NOT EXISTS / IF NOT EXISTS everywhere so it's safe to re-run.
 -- ─────────────────────────────────────────────────────────────────────────────

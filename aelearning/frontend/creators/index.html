@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creators — AEPath</title>
+  <title>Creators — Keyframe</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/pages.css" />
   <style>
@@ -140,7 +140,7 @@
 <body>
 <script src="/transitions.js"></script>
   <nav class="navbar" id="navbar">
-    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <a href="/" class="nav-logo">KEYFRAME <span class="nav-logo-tag">ArsynFX</span></a>
     <ul class="nav-links">
       <li><a href="/roadmap">Roadmap</a></li>
       <li><a href="/playlists">Playlists</a></li>
@@ -194,11 +194,12 @@
 
   <footer class="footer">
     <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
-      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 KEYFRAME &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
     </div>
   </footer>
 
   <script src="/shared.js"></script>
+  <script src="/search-widget.js"></script>
   <script>
     const DUMMY_CREATORS = [
       { id:'c1', name:'School of Motion',  handle:'@schoolofmotion',  videos:24, playlists:4, specialty:'Motion Design fundamentals, industry-standard workflows.', tags:['motion','workflow'], channel:'YOUTUBE', spotlight:true },
@@ -240,7 +241,7 @@
           <div>
             <div class="spotlight-tag">★ FEATURED CREATOR</div>
             <div class="spotlight-name">${escHtml(c.name)}</div>
-            <div class="spotlight-desc">${escHtml(c.specialty||'')} <span style="color:var(--accent);font-weight:600;">${c.videos} videos</span> curated on AEPath.</div>
+            <div class="spotlight-desc">${escHtml(c.specialty||'')} <span style="color:var(--accent);font-weight:600;">${c.videos} videos</span> curated on Keyframe.</div>
           </div>
         </div>`;
     }

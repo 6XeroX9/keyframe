@@ -1,5 +1,5 @@
 /* ─── CONFIG ────────────────────────────────────────────────────────────────── */
-const API = 'http://localhost:3000/api';
+const API = '/api';
 
 // Apply cached accent immediately — prevents orange flash on admin page load
 (function() {
@@ -956,7 +956,7 @@ function loadDataPanel() {
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement('a');
       a.href = url;
-      a.download = `aepath-backup-${new Date().toISOString().slice(0,10)}.json`;
+      a.download = `keyframe-backup-${new Date().toISOString().slice(0,10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
       status.style.color = '#4CAF50';

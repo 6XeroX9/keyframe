@@ -1,5 +1,5 @@
 /* ─── CONFIG ────────────────────────────────────────────────────────────────── */
-const API = 'http://localhost:3000/api';
+const API = '/api';
 
 // Apply cached accent immediately — prevents orange flash before API responds
 (function() {

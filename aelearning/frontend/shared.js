@@ -1,5 +1,5 @@
 /* ─── SHARED UTILITIES FOR ALL INNER PAGES ──────────────────────────────────── */
-const API = 'http://localhost:3000/api';
+const API = '/api';
 
 // Apply cached accent immediately — prevents orange flash on page load
 (function() {

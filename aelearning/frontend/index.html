@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEPath — Free After Effects Learning</title>
+  <meta name="description" content="Curated learning paths for After Effects. Zero fluff. Built by editors, for editors." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script src="/transitions.js"></script>
+
+  <!-- ─── NAVBAR ──────────────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">
+      AEPATH
+      <span class="nav-logo-tag">[AE]</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+
+    <div class="nav-actions" id="nav-actions">
+      <button class="nav-btn-login" id="nav-login-btn">LOGIN</button>
+      <button class="nav-btn-signup" id="nav-signup-btn">SIGN UP</button>
+    </div>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+    <div class="mobile-nav-actions" id="mobile-nav-actions">
+      <button class="nav-btn-login" id="mobile-login-btn">LOGIN</button>
+      <button class="nav-btn-signup" id="mobile-signup-btn">SIGN UP</button>
+    </div>
+  </div>
+
+  <!-- ─── HERO ────────────────────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <canvas id="hero-canvas"></canvas>
+
+    <span class="hero-vertical-label">FREE · CURATED · COMMUNITY</span>
+
+    <div class="hero-content">
+      <h1 class="hero-headline">
+        MASTER<br>
+        AFTER EFFECTS<span class="accent">.</span>
+      </h1>
+      <p class="hero-sub">Curated learning paths. Zero fluff. Built by editors, for editors.</p>
+      <div class="hero-ctas">
+        <a href="/roadmap" class="btn btn-accent">START LEARNING →</a>
+        <a href="/playlists" class="btn btn-outline">BROWSE PLAYLISTS</a>
+      </div>
+      <p class="hero-stats">2,400+ VIDEOS &nbsp;·&nbsp; 180+ CREATORS &nbsp;·&nbsp; 100% FREE</p>
+    </div>
+
+    <div class="hero-scroll-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- ─── MARQUEE ─────────────────────────────────────────────────────────── -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>MOTION GRAPHICS · EXPRESSIONS · 3D IN AFTER EFFECTS · COMPOSITING · COLOR GRADING · RIGGING · TEXT ANIMATION · VISUAL EFFECTS · </span>
+      <span>MOTION GRAPHICS · EXPRESSIONS · 3D IN AFTER EFFECTS · COMPOSITING · COLOR GRADING · RIGGING · TEXT ANIMATION · VISUAL EFFECTS · </span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── ROADMAP ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">01 /</span>
+        <h2 class="section-title">YOUR PATH TO PRO</h2>
+      </div>
+
+      <div class="roadmap-grid" id="roadmap-grid">
+        <!-- Beginner Column -->
+        <div class="roadmap-col">
+          <a href="/roadmap/beginner" class="roadmap-col-header specimen-frame">
+            <h3>BEGINNER</h3>
+            <span class="tag tag-accent">START HERE</span>
+          </a>
+          <div class="roadmap-col-items" id="videos-beginner">
+            <!-- skeleton -->
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+        </div>
+
+        <!-- Intermediate Column -->
+        <div class="roadmap-col">
+          <a href="/roadmap/intermediate" class="roadmap-col-header specimen-frame">
+            <h3>INTERMEDIATE</h3>
+            <span class="tag">LEVEL UP</span>
+          </a>
+          <div class="roadmap-col-items" id="videos-intermediate">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+        </div>
+
+        <!-- Advanced Column -->
+        <div class="roadmap-col">
+          <a href="/roadmap/pro" class="roadmap-col-header specimen-frame">
+            <h3>ADVANCED</h3>
+            <span class="tag">PRO MODE</span>
+          </a>
+          <div class="roadmap-col-items" id="videos-advanced">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="/roadmap" class="btn btn-ghost">[VIEW FULL ROADMAP →]</a>
+        <button type="button" id="surprise-me-btn" class="btn btn-ghost">[ 🎲 SURPRISE ME ]</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── PLAYLISTS ───────────────────────────────────────────────────────── -->
+  <section class="section" id="playlists">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">02 /</span>
+        <h2 class="section-title">COMMUNITY PICKS</h2>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="playlists-row" id="playlists-row">
+        <!-- skeletons -->
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+        <div class="playlist-card skeleton" style="min-width:280px;height:280px;"></div>
+      </div>
+
+      <div class="playlists-more">
+        <a href="/playlists" class="btn btn-ghost">[VIEW ALL PLAYLISTS →]</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── CREATORS ────────────────────────────────────────────────────────── -->
+  <section class="section" id="creators">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">03 /</span>
+        <h2 class="section-title">LEARN FROM THE BEST</h2>
+      </div>
+
+      <div class="creator-marquee-wrap reveal cm-row-1">
+        <div class="creator-marquee" id="creator-marquee-1"></div>
+      </div>
+      <div class="creator-marquee-wrap reveal cm-row-2">
+        <div class="creator-marquee creator-marquee--reverse" id="creator-marquee-2"></div>
+      </div>
+      <div class="creator-marquee-wrap reveal cm-row-3">
+        <div class="creator-marquee" id="creator-marquee-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STATS BANNER ────────────────────────────────────────────────────── -->
+  <div class="stats-banner">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-number">2,400+</span>
+        <span class="stat-label">Tutorials</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number">180+</span>
+        <span class="stat-label">Creators</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number">50+</span>
+        <span class="stat-label">Paths</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Free</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── ABOUT ────────────────────────────────────────────────────────────── -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-layout">
+        <div class="reveal">
+          <span class="section-number">05 /</span>
+          <h2 class="section-title" id="about-title">WHY WE<br>BUILT THIS.</h2>
+          <p class="about-body" id="about-body">AEPath was born from frustration. Too many tutorial sites buried the good stuff behind paywalls, email gates, and algorithm-driven noise. We curate only the best After Effects content on YouTube — free, structured, and honest.</p>
+          <p class="about-body" id="about-body-2">No ads. No paywalls. No sponsored fluff. Just the teachers who actually know their craft.</p>
+        </div>
+        <div class="manifesto-grid">
+          <div class="manifesto-card reveal">
+            <span class="manifesto-num">001</span>
+            <span class="manifesto-text" id="about-m1">FREE FOR EVERY<br>EDITOR ON EARTH</span>
+          </div>
+          <div class="manifesto-card reveal">
+            <span class="manifesto-num">002</span>
+            <span class="manifesto-text" id="about-m2">CURATED NOT<br>ALGORITHM-DRIVEN</span>
+          </div>
+          <div class="manifesto-card reveal">
+            <span class="manifesto-num">003</span>
+            <span class="manifesto-text" id="about-m3">BUILT BY EDITORS<br>FOR EDITORS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── COURSES CTA ─────────────────────────────────────────────────────── -->
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="courses-layout">
+        <div class="courses-left reveal">
+          <span class="section-number">04 /</span>
+          <h2 class="section-title">STRUCTURED TRAINING BY REAL EDUCATORS</h2>
+          <p>When you're ready to go deeper, these hand-picked paid courses go beyond YouTube and give you the structured curriculum that actually gets results.</p>
+          <a href="/courses" class="btn btn-accent">[EXPLORE PAID COURSES →]</a>
+        </div>
+
+        <div class="courses-right reveal">
+          <div class="course-card-preview">
+            <div class="course-thumb-placeholder"></div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:16px;margin-bottom:4px;">MOTION DESIGN MASTERCLASS</div>
+              <div style="font-size:12px;color:var(--text-secondary);">by Motion Array</div>
+              <div style="font-size:12px;color:var(--accent);margin-top:6px;">$97</div>
+            </div>
+            <span class="premium-badge">PREMIUM</span>
+            <span class="lock-icon">🔒</span>
+          </div>
+
+          <div class="course-card-preview">
+            <div class="course-thumb-placeholder"></div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:16px;margin-bottom:4px;">EXPRESSIONS BIBLE</div>
+              <div style="font-size:12px;color:var(--text-secondary);">by Animoplex Pro</div>
+              <div style="font-size:12px;color:var(--accent);margin-top:6px;">$47</div>
+            </div>
+            <span class="premium-badge">PREMIUM</span>
+            <span class="lock-icon">🔒</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────────────────────── -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">06 /</span>
+        <h2 class="section-title">COMMON QUESTIONS</h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Do I need a paid version of After Effects?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>You need Adobe's AE app itself (it's part of Creative Cloud, not free), but every tutorial, playlist, and creator on this site is 100% free to watch. AEPath doesn't gate anything behind a paywall — the paid courses section is optional, for when you want a structured curriculum instead of YouTube.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How long until I'm actually good at this?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Most people move from Beginner to comfortable Intermediate work in 2–3 months of regular practice — an hour or two a few times a week. Advanced/Pro topics like expressions and 3D take longer, but the roadmap is built so each level unlocks real, usable skills on its own.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Do I need to make an account?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>No. Every roadmap, playlist, and video is browsable without signing up, and "Mark Watched" / "Save" work with just your browser. An account only matters if you want your saved playlists to follow you across devices.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How do you pick what's on here?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Manually, by editors who actually use After Effects. No algorithm, no pay-for-placement. If a tutorial is outdated, confusing, or clickbait, it doesn't make the cut — see "why we built this" above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────────────────────── -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">06 /</span>
+        <h2 class="section-title">COMMON QUESTIONS</h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Do I need a paid version of After Effects?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>You need Adobe's AE app itself (it's part of Creative Cloud, not free), but every tutorial, playlist, and creator on this site is 100% free to watch. AEPath doesn't gate anything behind a paywall — the paid courses section is optional, for when you want a structured curriculum instead of YouTube.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How long until I'm actually good at this?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Most people move from Beginner to comfortable Intermediate work in 2–3 months of regular practice — an hour or two a few times a week. Advanced/Pro topics like expressions and 3D take longer, but the roadmap is built so each level unlocks real, usable skills on its own.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Do I need to make an account?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>No. Every roadmap, playlist, and video is browsable without signing up, and "Mark Watched" / "Save" work with just your browser. An account only matters if you want your saved playlists to follow you across devices.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How do you pick what's on here?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Manually, by editors who actually use After Effects. No algorithm, no pay-for-placement. If a tutorial is outdated, confusing, or clickbait, it doesn't make the cut — see "why we built this" above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ──────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">AEPATH</div>
+        <p class="footer-tagline">Free curated learning paths for After Effects users. No ads, no paywalls. Just the good stuff.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/arsynfx" target="_blank" rel="noopener" class="footer-social-link">IG</a>
+          <a href="https://discord.gg/t69bHu4q6K" target="_blank" rel="noopener" class="footer-social-link">DC</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">NAVIGATE</div>
+        <ul class="footer-links">
+          <li><a href="/roadmap">Roadmap</a></li>
+          <li><a href="/playlists">Playlists</a></li>
+          <li><a href="/creators">Creators</a></li>
+          <li><a href="/courses">Courses</a></li>
+          <li><a href="/shortcuts">Shortcuts</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 AEPATH · BUILT BY EDITORS FOR EDITORS</p>
+      <p style="font-size:10px;color:var(--text-secondary)">NOT AFFILIATED WITH ADOBE &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <!-- ─── VIDEO MODAL ─────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="video-modal">
+    <div class="modal-container">
+      <div class="modal-topbar">
+        <h3 class="modal-title" id="modal-title">Video Title</h3>
+        <button class="modal-close" id="modal-close">✕ CLOSE</button>
+      </div>
+      <div class="modal-iframe-wrap">
+        <iframe id="modal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div class="modal-meta">
+        <span class="modal-creator" id="modal-creator"></span>
+        <span class="tag" id="modal-duration"></span>
+        <span class="tag" id="modal-level"></span>
+        <a href="#" target="_blank" rel="noopener" class="tag tag-accent" id="modal-youtube-link" style="margin-left:auto;">▶ WATCH ON YOUTUBE</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── LOGIN MODAL ─────────────────────────────────────────────────────── -->
+  <div class="auth-overlay" id="login-overlay">
+    <button class="auth-close" id="login-close" aria-label="Close">✕</button>
+    <div class="auth-box">
+      <h2 class="auth-title">WELCOME BACK</h2>
+      <p class="auth-subtitle">Sign in to your AEPath account</p>
+      <div class="auth-field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com" />
+      </div>
+      <div class="auth-field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <div class="auth-error" id="login-error"></div>
+      <button class="auth-btn" id="login-submit">LOGIN</button>
+      <div class="auth-footer">
+        <a href="#">Forgot password?</a> &nbsp;·&nbsp;
+        Don't have an account? <span class="auth-switch" id="switch-to-signup">SIGN UP</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SIGNUP MODAL ────────────────────────────────────────────────────── -->
+  <div class="auth-overlay" id="signup-overlay">
+    <button class="auth-close" id="signup-close" aria-label="Close">✕</button>
+    <div class="auth-box">
+      <h2 class="auth-title">JOIN AEPATH</h2>
+      <p class="auth-subtitle">Create your free account</p>
+      <div class="auth-field">
+        <label for="signup-username">Username</label>
+        <input type="text" id="signup-username" placeholder="motionpro" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="••••••••" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-confirm">Confirm Password</label>
+        <input type="password" id="signup-confirm" placeholder="••••••••" />
+      </div>
+      <div class="auth-error" id="signup-error"></div>
+      <button class="auth-btn" id="signup-submit">CREATE ACCOUNT</button>
+      <div class="auth-footer">
+        Already have an account? <span class="auth-switch" id="switch-to-login">LOGIN</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── DASHBOARD PANEL ─────────────────────────────────────────────────── -->
+  <div class="dashboard-panel" id="dashboard-panel">
+    <button class="dashboard-close" id="dashboard-close">✕ CLOSE</button>
+    <div class="dashboard-greeting">HEY, <span id="dash-username">USER</span>.</div>
+
+    <div>
+      <div class="dashboard-section-title">MY PLAYLISTS</div>
+      <div id="dash-playlists">
+        <p class="dashboard-empty">No playlists yet.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="dashboard-section-title">ACCOUNT</div>
+      <p class="dashboard-empty" id="dash-email"></p>
+    </div>
+
+    <button class="dashboard-logout" id="dashboard-logout">LOGOUT</button>
+  </div>
+
+  <!-- ─── THREE.JS ─────────────────────────────────────────────────────────── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="/progress.js"></script>
+  <script src="/search-widget.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

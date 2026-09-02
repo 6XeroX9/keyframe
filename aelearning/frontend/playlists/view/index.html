@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playlist — Keyframe</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .pl-hero-row { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+    .pl-hero-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 2px solid var(--accent); overflow: hidden; flex-shrink: 0;
+      background: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 16px; color: var(--accent);
+    }
+    .pl-hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .pl-hero-creator-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .pl-hero-creator-sub { font-size: 10px; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; }
+    .pl-stat-row { display: flex; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+    .pl-stat strong { font-family: var(--font-display); font-size: 22px; color: var(--accent); display: block; }
+    .pl-stat span { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+    .pl-yt-cta {
+      margin-top: 28px; display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent); padding: 10px 22px;
+      border-radius: var(--card-radius); text-decoration: none; transition: all var(--transition);
+    }
+    .pl-yt-cta:hover { background: var(--accent); color: #000; }
+    .video-list-header {
+      display: grid;
+      grid-template-columns: 48px 100px 1fr auto auto auto auto;
+      gap: 16px;
+      padding: 8px 16px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .vlh-col { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); }
+    .video-row { opacity: 0; }
+    .video-row.entered { animation: row-enter 0.4s ease forwards; }
+    .pl-not-found { text-align: center; padding: 100px 0; }
+    @media (max-width: 680px) {
+      .video-list-header { grid-template-columns: 40px 72px 1fr auto; }
+      .video-list-header .vlh-col:nth-child(4),
+      .video-list-header .vlh-col:nth-child(6) { display: none; }
+      .video-row .vr-watch, .video-row .vr-yt { display: none; }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">KEYFRAME <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists" class="active">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div id="page-content">
+    <div class="page-hero" style="position:relative;">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/">HOME</a><span class="breadcrumb-sep">/</span>
+          <a href="/playlists">PLAYLISTS</a><span class="breadcrumb-sep">/</span>
+          <span id="breadcrumb-name">—</span>
+        </div>
+        <span class="section-number">CURATED COLLECTION</span>
+        <h1 class="page-title" id="pl-title">LOADING…</h1>
+        <p class="page-subtitle" id="pl-description" style="max-width:640px;"></p>
+
+        <div class="pl-hero-row" id="pl-creator-row" style="display:none;">
+          <div class="pl-hero-avatar" id="pl-creator-avatar"></div>
+          <div>
+            <div class="pl-hero-creator-name" id="pl-creator-name"></div>
+            <div class="pl-hero-creator-sub">CREATOR</div>
+          </div>
+        </div>
+
+        <div class="pl-stat-row">
+          <div class="pl-stat"><strong id="pl-stat-count">—</strong><span>VIDEOS</span></div>
+          <div class="pl-stat"><strong id="pl-stat-duration">—</strong><span>TOTAL RUNTIME</span></div>
+        </div>
+
+        <a href="#" target="_blank" rel="noopener" class="pl-yt-cta" id="pl-yt-cta" style="display:none;">▶ WATCH FULL PLAYLIST ON YOUTUBE →</a>
+      </div>
+    </div>
+
+    <section style="padding:56px 0 100px;">
+      <div class="container">
+        <div class="video-list-header">
+          <span class="vlh-col">#</span>
+          <span class="vlh-col">PREVIEW</span>
+          <span class="vlh-col">TITLE</span>
+          <span class="vlh-col">DURATION</span>
+          <span class="vlh-col">STATUS</span>
+          <span class="vlh-col">YT</span>
+          <span class="vlh-col" style="text-align:right;">PLAY</span>
+        </div>
+        <div class="video-list" id="video-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="pl-not-found" id="not-found" style="display:none;">
+    <span class="section-number">404</span>
+    <h1 class="page-title">PLAYLIST NOT FOUND.</h1>
+    <a href="/playlists" class="btn btn-accent" style="margin-top:24px;display:inline-block;">← BACK TO PLAYLISTS</a>
+  </div>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 KEYFRAME &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script src="/progress.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const PLAYLIST_ID = params.get('id');
+
+    function buildRow(v, idx) {
+      const div = document.createElement('div');
+      div.className = 'video-row';
+      div.dataset.id = v.id;
+      const thumb = v.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="vr-thumb-placeholder">▶</div>`;
+      div.innerHTML = `
+        <div class="vr-num">${String(idx+1).padStart(3,'0')}</div>
+        <div class="vr-thumb">${thumb}</div>
+        <div class="vr-info">
+          <div class="vr-title">${escHtml(v.title)}</div>
+          <div class="vr-creator">${escHtml(v.creators?.name||'Unknown channel')}</div>
+        </div>
+        <span class="vr-duration">${escHtml(v.duration || '—')}</span>
+        <button type="button" class="vr-watch wt-btn"></button>
+        <a href="${escHtml(v.youtube_url || (v.youtube_id ? `https://www.youtube.com/watch?v=${v.youtube_id}` : '#'))}" target="_blank" rel="noopener" class="vr-yt wt-btn" title="Open on YouTube">YT ↗</a>
+        <div class="vr-play">PLAY ▶</div>`;
+
+      div.querySelector('.vr-yt').addEventListener('click', e => e.stopPropagation());
+
+      const watchBtn = div.querySelector('.vr-watch');
+      const syncWatchBtn = () => {
+        const watched = AEProgress.isWatched(v.id);
+        watchBtn.classList.toggle('active', watched);
+        watchBtn.textContent = watched ? '✓ Watched' : 'Mark Watched';
+      };
+      syncWatchBtn();
+      watchBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        AEProgress.toggleWatched(v.id);
+        syncWatchBtn();
+      });
+
+      div.addEventListener('click', () => openModal(v));
+      return div;
+    }
+
+    function formatTotalDuration(videos) {
+      let totalSeconds = 0;
+      let any = false;
+      videos.forEach(v => {
+        if (!v.duration) return;
+        const parts = v.duration.split(':').map(Number);
+        if (parts.some(isNaN)) return;
+        any = true;
+        if (parts.length === 3) totalSeconds += parts[0]*3600 + parts[1]*60 + parts[2];
+        else if (parts.length === 2) totalSeconds += parts[0]*60 + parts[1];
+      });
+      if (!any) return '—';
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.round((totalSeconds % 3600) / 60);
+      return h ? `${h}h ${m}m` : `${m}m`;
+    }
+
+    async function loadPlaylist() {
+      if (!PLAYLIST_ID) return showNotFound();
+      try {
+        const d = await apiFetch(`/playlists/${PLAYLIST_ID}`);
+        const pl = d.playlist;
+        if (!pl) return showNotFound();
+        renderPlaylist(pl);
+      } catch {
+        showNotFound();
+      }
+    }
+
+    function showNotFound() {
+      document.getElementById('page-content').style.display = 'none';
+      document.getElementById('not-found').style.display = 'block';
+    }
+
+    function renderPlaylist(pl) {
+      document.title = `${pl.name} — Keyframe`;
+      document.getElementById('breadcrumb-name').textContent = pl.name.toUpperCase();
+      document.getElementById('pl-title').textContent = pl.name;
+      document.getElementById('pl-description').textContent = pl.description || '';
+
+      if (pl.creators?.name) {
+        document.getElementById('pl-creator-row').style.display = 'flex';
+        document.getElementById('pl-creator-name').textContent = pl.creators.name;
+        const avatarEl = document.getElementById('pl-creator-avatar');
+        const plInitials = pl.creators.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+        if (pl.creators.avatar_url) {
+          avatarEl.innerHTML = `<img src="${escHtml(pl.creators.avatar_url)}" alt="" onerror="this.remove();this.parentElement.textContent='${plInitials}';">`;
+        } else {
+          avatarEl.textContent = pl.creators.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+        }
+      }
+
+      // Order videos to match the playlist's stored video_ids order
+      const byId = {};
+      (pl.videos || []).forEach(v => { byId[v.id] = v; });
+      const orderedVideos = (pl.video_ids || []).map(id => byId[id]).filter(Boolean);
+
+      document.getElementById('pl-stat-count').textContent = orderedVideos.length;
+      document.getElementById('pl-stat-duration').textContent = formatTotalDuration(orderedVideos);
+
+      if (pl.youtube_playlist_url) {
+        const cta = document.getElementById('pl-yt-cta');
+        cta.href = pl.youtube_playlist_url;
+        cta.style.display = 'inline-block';
+      }
+
+      const list = document.getElementById('video-list');
+      list.innerHTML = '';
+      if (!orderedVideos.length) {
+        list.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-secondary);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;">No videos in this playlist yet.</div>`;
+        return;
+      }
+      orderedVideos.forEach((v, i) => {
+        const row = buildRow(v, i);
+        list.appendChild(row);
+        setTimeout(() => row.classList.add('entered'), Math.min(60 + i * 20, 900));
+      });
+    }
+
+    loadPlaylist();
+  </script>
+</body>
+</html>

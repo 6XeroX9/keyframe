@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Offline — Keyframe</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .offline-wrap {
+      min-height: calc(100vh - 300px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0 64px;
+    }
+    .offline-inner { max-width: 560px; text-align: center; margin: 0 auto; }
+
+    /* ── RETRO TV 404 — adapted from a Uiverse.io component by Praashoo7 ─────── */
+    /* Simplified to just the TV body + screen (dropped the decorative antenna,
+       background "404" text, and leg bars — they were absolutely-positioned
+       with hand-tuned em offsets calibrated for an isolated demo, and drifted
+       badly once placed under a real navbar). */
+    .main_wrapper { display: flex; align-items: center; justify-content: center; }
+    .tv {
+      position: relative;
+      width: 20em; height: 10.5em; border-radius: 15px;
+      background-color: #d36604; display: flex; justify-content: center;
+      border: 2px solid #1d0e01; box-shadow: inset 0.2em 0.2em #e69635;
+    }
+    .tv::after {
+      content: ""; position: absolute; inset: 0; border-radius: 15px;
+      background:
+        repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference; opacity: 0.09;
+    }
+    .display_div {
+      display: flex; align-items: center; align-self: center; justify-content: center;
+      border-radius: 15px; box-shadow: 3.5px 3.5px 0px #e69635;
+    }
+    .screen_out1 {
+      width: 13em; height: 9.1em; display: flex; align-items: center;
+      justify-content: center; border-radius: 10px;
+    }
+    .notfound_text {
+      background-color: black; padding: 0 0.3em; font-size: 0.75em;
+      color: white; border-radius: 5px;
+    }
+    .screen {
+      width: 15.3em; height: 9.2em; font-family: var(--font-body);
+      border: 2px solid #1d0e01; cursor: pointer;
+      background:
+        repeating-radial-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference;
+      animation: tv-static 0.2s infinite alternate;
+      border-radius: 10px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: #252525; letter-spacing: 0.15em; text-align: center;
+    }
+    .screenM {
+      width: 15.3em; height: 9.2em; position: relative; font-family: var(--font-body);
+      cursor: pointer;
+      background: linear-gradient(to right,
+        #002fc6 0%, #002bb2 14.29%, #3a3a3a 14.29%, #303030 28.57%,
+        #ff0afe 28.57%, #f500f4 42.86%, #6c6c6c 42.86%, #626262 57.14%,
+        #0affd9 57.14%, #00f5ce 71.43%, #3a3a3a 71.43%, #303030 85.71%,
+        white 85.71%, #fafafa 100%);
+      border-radius: 10px; border: 2px solid black;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; letter-spacing: 0.15em; text-align: center;
+      overflow: hidden;
+    }
+    .screenM::before, .screenM::after { content: ""; position: absolute; left: 0; width: 100%; }
+    .screenM::before {
+      top: 0; height: 68.48%;
+      background: linear-gradient(to right,
+        white 0%, #fafafa 14.29%, #ffe60a 14.29%, #f5dc00 28.57%,
+        #0affd9 28.57%, #00f5ce 42.86%, #10ea00 42.86%, #0ed600 57.14%,
+        #ff0afe 57.14%, #f500f4 71.43%, #ed0014 71.43%, #d90012 85.71%,
+        #002fc6 85.71%, #002bb2 100%);
+    }
+    .screenM::after {
+      bottom: 0; height: 21.74%;
+      background: linear-gradient(to right,
+        #006c6b 0%, #005857 16.67%, white 16.67%, #fafafa 33.33%,
+        #001b75 33.33%, #001761 50%, #6c6c6c 50%, #626262 66.67%,
+        #929292 66.67%, #888888 83.33%, #3a3a3a 83.33%, #303030 100%);
+    }
+    @keyframes tv-static { 100% { background-position: 50% 0, 60% 50%; } }
+
+    .lines { display: flex; column-gap: 0.1em; align-self: flex-end; }
+    .line1, .line3 { width: 2px; height: 0.5em; background-color: black; border-radius: 25px 25px 0px 0px; margin-top: 0.5em; }
+    .line2 { flex-grow: 1; width: 2px; height: 1em; background-color: black; border-radius: 25px 25px 0px 0px; }
+
+    .buttons_div {
+      width: 5em; align-self: center; height: 9.4em;
+      background-color: #e69635; border: 2px solid #1d0e01; padding: 0.6em;
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; row-gap: 0.75em; box-shadow: 3px 3px 0px #e69635;
+    }
+    .b1, .b2 {
+      width: 1.65em; height: 1.65em; border-radius: 50%; background-color: #7f5934;
+      border: 2px solid black; position: relative;
+      box-shadow: inset 2px 2px 1px #b49577, -2px 0px #513721, -2px 0px 0px 1px black;
+    }
+    .speakers { display: flex; flex-direction: column; row-gap: 0.5em; }
+    .speakers .g1 { display: flex; column-gap: 0.25em; }
+    .speakers .g1 .g11, .g12, .g13 {
+      width: 0.65em; height: 0.65em; border-radius: 50%; background-color: #7f5934;
+      border: 2px solid black; box-shadow: inset 1.25px 1.25px 1px #b49577;
+    }
+    .speakers .g { width: auto; height: 2px; background-color: #171717; }
+
+    .tv-shadow {
+      width: 17.6em; height: 0.6em; margin: 10px auto 0;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 75%);
+    }
+
+    @media only screen and (max-width: 1024px) { .screenM { display: flex; } .screen { display: none; } }
+    @media only screen and (min-width: 1025px) { .screen { display: flex; } .screenM { display: none; } }
+
+    .offline-copy { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 32px 0; }
+    .offline-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── EASTER EGG: click the screen ────────────────────────────────────── */
+    .render-ui { position: relative; }
+    .render-pct {
+      font-family: var(--font-display); font-size: 20px; color: #fff;
+      background: rgba(0,0,0,0.7); padding: 2px 10px; border-radius: 4px; margin-bottom: 4px;
+    }
+    .render-log {
+      font-family: var(--font-mono); font-size: 6px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #fff; background: rgba(0,0,0,0.7);
+      padding: 2px 6px; border-radius: 3px; max-width: 90%;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .crash-ui {
+      background: rgba(0,0,0,0.82); border-radius: 8px; padding: 8px 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .crash-title {
+      font-family: var(--font-display); font-size: 9px; letter-spacing: 0.02em;
+      color: #ff4d8f; line-height: 1.2; text-transform: none;
+    }
+    .crash-body { font-size: 6px; color: #ccc; line-height: 1.4; }
+    .crash-actions { display: flex; gap: 6px; margin-top: 2px; }
+    .crash-btn {
+      font-family: var(--font-body); font-size: 6px; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; padding: 3px 7px;
+      border: 1px solid #555; border-radius: 3px;
+      background: transparent; color: #ccc; cursor: pointer;
+    }
+    .crash-btn-accent { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">KEYFRAME <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="offline-wrap">
+    <div class="offline-inner">
+
+      <div class="main_wrapper">
+        <div class="tv">
+          <div class="display_div">
+            <div class="screen_out1">
+              <div class="screen" id="tv-screen"><span class="notfound_text">NOT FOUND</span></div>
+              <div class="screenM" id="tv-screenM"><span class="notfound_text">NOT FOUND</span></div>
+            </div>
+          </div>
+          <div class="lines">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+          <div class="buttons_div">
+            <div class="b1"></div>
+            <div class="b2"></div>
+            <div class="speakers">
+              <div class="g1"><div class="g11"></div><div class="g12"></div><div class="g13"></div></div>
+              <div class="g"></div>
+              <div class="g"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tv-shadow"></div>
+
+      <p class="offline-copy">This page doesn't exist. And before you ask — no, guessing the admin URL won't get you anywhere either. Nice try though.</p>
+      <div class="offline-actions">
+        <a href="/" class="btn btn-accent">BACK TO HOMEPAGE</a>
+        <a href="/roadmap" class="btn" style="border:1px solid var(--border);color:var(--text-secondary);">BROWSE ROADMAP</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 KEYFRAME &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script>
+    (function () {
+      const screens = [document.getElementById('tv-screen'), document.getElementById('tv-screenM')];
+      let rendering = false;
+
+      const LOG_LINES = [
+        'Caching frame 1 of ∞...',
+        'Ray-tracing your patience...',
+        'Optimizing disappointment...',
+        'Compressing excuses...',
+        'Please do not touch the timeline...',
+        'Rendering (this always happens)...',
+      ];
+      const WAIT_LINES = [
+        'Still not responding...',
+        'Really not responding...',
+        'It is thinking very hard.',
+        'Consider a coffee break.',
+        'This is fine.',
+      ];
+
+      function setScreens(html) {
+        screens.forEach(s => { s.innerHTML = html; });
+      }
+
+      screens.forEach(s => s.addEventListener('click', () => {
+        if (rendering) return;
+        rendering = true;
+        startRender();
+      }));
+
+      function startRender() {
+        setScreens(`
+          <div class="render-ui">
+            <div class="render-pct">0%</div>
+            <div class="render-log">${LOG_LINES[0]}</div>
+          </div>`);
+        const pcts = screens.map(s => s.querySelector('.render-pct'));
+        const logs = screens.map(s => s.querySelector('.render-log'));
+
+        let logIdx = 0;
+        const logTimer = setInterval(() => {
+          logIdx = (logIdx + 1) % LOG_LINES.length;
+          logs.forEach(l => { l.textContent = LOG_LINES[logIdx]; });
+        }, 850);
+
+        let p = 0;
+        function tick() {
+          const remaining = 99 - p;
+          p += Math.max(0.15, remaining * 0.045);
+          if (p >= 99) p = 99;
+          pcts.forEach(el => { el.textContent = Math.floor(p) + '%'; });
+          if (p < 99) {
+            setTimeout(tick, 40);
+          } else {
+            clearInterval(logTimer);
+            logs.forEach(l => { l.textContent = 'Rendering (this always happens)...'; });
+            setTimeout(crash, 3200);
+          }
+        }
+        tick();
+      }
+
+      function crash() {
+        setScreens(`
+          <div class="crash-ui">
+            <div class="crash-title">AE HAS STOPPED<br>RESPONDING</div>
+            <div class="crash-body crash-body-text">Unexpected deadline encountered.</div>
+            <div class="crash-actions">
+              <button type="button" class="crash-btn crash-wait-btn">Wait</button>
+              <button type="button" class="crash-btn crash-btn-accent crash-quit-btn">Force Quit</button>
+            </div>
+          </div>`);
+        let waitIdx = 0;
+        screens.forEach(s => {
+          s.querySelector('.crash-wait-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            s.querySelector('.crash-body-text').textContent = WAIT_LINES[waitIdx % WAIT_LINES.length];
+            waitIdx++;
+          });
+          s.querySelector('.crash-quit-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetScreens();
+          });
+        });
+      }
+
+      function resetScreens() {
+        rendering = false;
+        setScreens('<span class="notfound_text">NOT FOUND</span>');
+      }
+    })();
+  </script>
+</body>
+</html>

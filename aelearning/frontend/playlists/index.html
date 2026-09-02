@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playlists — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    /* ── FEATURED HERO CARD ─────────────────────────────────────── */
+    .pl-featured {
+      position: relative; overflow: hidden;
+      border: 1px solid var(--border); border-radius: var(--card-radius);
+      background: var(--bg-card);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 64px;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+    .pl-featured:hover { border-color: var(--accent); }
+    .pl-featured-thumb {
+      position: relative; overflow: hidden;
+      aspect-ratio: 16/9;
+    }
+    .pl-featured-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s ease;
+      display: block;
+    }
+    .pl-featured:hover .pl-featured-thumb img { transform: scale(1.04); }
+    .pl-featured-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 60%, var(--bg-card));
+      pointer-events: none;
+    }
+    .pl-featured-body {
+      padding: 40px 40px 40px 32px;
+      display: flex; flex-direction: column; justify-content: center; gap: 16px;
+    }
+    .pl-featured-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .pl-featured-title {
+      font-family: var(--font-display); font-size: clamp(28px, 3vw, 44px);
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .pl-featured-desc {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 360px;
+    }
+    .pl-featured-stats {
+      display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+    }
+    .pl-featured-stat {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .pl-featured-stat strong { color: var(--accent); font-family: var(--font-display); font-size: 20px; }
+    .pl-featured-cta {
+      margin-top: 8px; align-self: flex-start;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent); padding: 10px 20px;
+      border-radius: var(--card-radius); transition: all var(--transition);
+      display: inline-block;
+    }
+    .pl-featured:hover .pl-featured-cta {
+      background: var(--accent); color: #000;
+    }
+
+    /* ── SECTION HEADER (mag-style) ─────────────────────────────── */
+    .pl-section-head {
+      display: flex; align-items: baseline; gap: 20px;
+      margin-bottom: 24px; padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .pl-section-title {
+      font-family: var(--font-display); font-size: 13px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-primary);
+    }
+    .pl-section-count {
+      font-size: 10px; color: var(--text-secondary); letter-spacing: 0.1em;
+    }
+
+    /* ── MAG GRID ────────────────────────────────────────────────── */
+    .pl-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+
+    /* ── PLAYLIST CARD ───────────────────────────────────────────── */
+    .pl-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--card-radius); overflow: hidden;
+      cursor: pointer; transition: border-color var(--transition), transform var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .pl-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .pl-card-thumb {
+      position: relative; overflow: hidden; aspect-ratio: 16/9;
+    }
+    .pl-card-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .pl-card:hover .pl-card-thumb img { transform: scale(1.06); }
+    .pl-card-count-badge {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0,0,0,0.85); border: 1px solid var(--border);
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-primary);
+      padding: 3px 8px; border-radius: 2px;
+    }
+    .pl-card-body { padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .pl-card-tag {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .pl-card-title {
+      font-family: var(--font-display); font-size: 17px; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--text-primary); line-height: 1.2;
+    }
+    .pl-card-creator {
+      font-size: 11px; color: var(--text-secondary);
+    }
+    .pl-card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .pl-card-duration {
+      font-size: 10px; color: var(--text-secondary); letter-spacing: 0.08em;
+    }
+    .pl-card-arrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--accent); text-transform: uppercase;
+    }
+
+    /* ── EMPTY STATE ─────────────────────────────────────────────── */
+    .pl-empty {
+      grid-column: 1/-1; text-align: center; padding: 60px 0;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .pl-featured { grid-template-columns: 1fr; }
+      .pl-featured-thumb::after { background: linear-gradient(180deg, transparent 60%, var(--bg-card)); }
+      .pl-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .pl-grid { grid-template-columns: 1fr; }
+      .pl-featured-body { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists" class="active">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>PLAYLISTS
+      </div>
+      <span class="section-number">CURATED COLLECTIONS</span>
+      <h1 class="page-title">PLAYLISTS.</h1>
+      <p class="page-subtitle">Hand-picked sequences built around a single topic. Watch in order, learn faster.</p>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Filter -->
+      <div class="filter-bar" style="margin-bottom:40px;">
+        <span class="filter-label">TOPIC:</span>
+        <button class="filter-btn active" data-tag="all">ALL</button>
+        <button class="filter-btn" data-tag="animation">ANIMATION</button>
+        <button class="filter-btn" data-tag="expressions">EXPRESSIONS</button>
+        <button class="filter-btn" data-tag="3d">3D</button>
+        <button class="filter-btn" data-tag="workflow">WORKFLOW</button>
+      </div>
+
+      <!-- Featured -->
+      <div id="featured-wrap"></div>
+
+      <!-- All playlists -->
+      <div class="pl-section-head">
+        <span class="pl-section-title">ALL PLAYLISTS</span>
+        <span class="pl-section-count" id="pl-count">— COLLECTIONS</span>
+      </div>
+      <div class="pl-grid" id="pl-grid"></div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script>
+    const DUMMY_PLAYLISTS = [
+      { id:'pl1', title:'Motion Principles',   creator:'School of Motion', video_count:8,  total_duration:'2h 20m', tags:['animation'], youtube_id:'9KKhfXJo-zg', featured:true,
+        description:'The eight essential principles of motion design — from anticipation to follow-through. Build your instinct for great movement.' },
+      { id:'pl2', title:'Expression Toolkit',  creator:'Mt. Mograph',      video_count:6,  total_duration:'1h 45m', tags:['expressions'], youtube_id:'HBq_pUJWd7s', featured:false },
+      { id:'pl3', title:'3D Compositing',      creator:'Evan Abrams',       video_count:5,  total_duration:'1h 30m', tags:['3d'], youtube_id:'UeJeq4PBXLA', featured:false },
+      { id:'pl4', title:'Speed Workflow',      creator:'Jake In Motion',    video_count:7,  total_duration:'1h 10m', tags:['workflow'], youtube_id:'v7by6RLTO_4', featured:false },
+      { id:'pl5', title:'Text Animations',     creator:'Ukramedia',         video_count:9,  total_duration:'2h 05m', tags:['animation'], youtube_id:'Os-oFj4XURM', featured:false },
+      { id:'pl6', title:'Liquid Motion',       creator:'Motion Bro',        video_count:4,  total_duration:'58m',    tags:['animation'], youtube_id:'rAVxSCF7gvw', featured:false },
+    ];
+
+    function buildFeatured(pl) {
+      const thumb = pl.youtube_id
+        ? `https://img.youtube.com/vi/${pl.youtube_id}/maxresdefault.jpg`
+        : '';
+      const wrap = document.getElementById('featured-wrap');
+      wrap.innerHTML = `
+        <div class="pl-featured reveal" onclick="window.location='/playlists/view?id=${pl.id}'">
+          <div class="pl-featured-thumb">
+            ${thumb ? `<img src="${thumb}" alt="" loading="lazy">` : ''}
+          </div>
+          <div class="pl-featured-body">
+            <span class="pl-featured-tag">★ FEATURED COLLECTION</span>
+            <div class="pl-featured-title">${escHtml(pl.title || pl.name)}</div>
+            <div class="pl-featured-desc">${escHtml(pl.description||'')}</div>
+            <div class="pl-featured-stats">
+              <div class="pl-featured-stat"><strong>${pl.video_count}</strong><br>VIDEOS</div>
+              <div class="pl-featured-stat"><strong>${escHtml(pl.total_duration||'—')}</strong><br>TOTAL</div>
+            </div>
+            <span class="pl-featured-cta">VIEW PLAYLIST →</span>
+          </div>
+        </div>`;
+    }
+
+    function buildCard(pl) {
+      const div = document.createElement('div');
+      div.className = 'pl-card reveal';
+      div.dataset.tags = (pl.tags||[]).join(',');
+      const thumb = pl.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${pl.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="vr-thumb-placeholder">▶</div>`;
+      div.innerHTML = `
+        <div class="pl-card-thumb">
+          ${thumb}
+          <span class="pl-card-count-badge">${pl.video_count} VIDEOS</span>
+        </div>
+        <div class="pl-card-body">
+          <span class="pl-card-tag">${((pl.tags||['general'])[0]).toUpperCase()}</span>
+          <div class="pl-card-title">${escHtml(pl.title || pl.name)}</div>
+          <div class="pl-card-creator">${escHtml(pl.creator || pl.creators?.name || '')}</div>
+          <div class="pl-card-footer">
+            <span class="pl-card-duration">${escHtml(pl.total_duration||'—')}</span>
+            <span class="pl-card-arrow">VIEW →</span>
+          </div>
+        </div>`;
+      div.addEventListener('click', () => { window.location = `/playlists/view?id=${pl.id}`; });
+      return div;
+    }
+
+    async function loadPlaylists() {
+      let playlists = DUMMY_PLAYLISTS;
+      try {
+        const d = await apiFetch('/playlists?limit=20');
+        if (d.playlists?.length) playlists = d.playlists;
+      } catch {}
+
+      const featured = playlists.find(p => p.featured || p.is_featured);
+      if (featured) buildFeatured(featured);
+
+      const grid = document.getElementById('pl-grid');
+      const nonFeatured = playlists.filter(p => !(p.featured || p.is_featured));
+      nonFeatured.forEach(pl => grid.appendChild(buildCard(pl)));
+      document.getElementById('pl-count').textContent = `${nonFeatured.length} COLLECTIONS`;
+
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 80);
+        });
+      }, 100);
+    }
+
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tag = btn.dataset.tag;
+        document.querySelectorAll('.pl-card').forEach(card => {
+          const match = tag === 'all' || (card.dataset.tags||'').includes(tag);
+          card.style.display = match ? '' : 'none';
+        });
+      });
+    });
+
+    loadPlaylists();
+  </script>
+</body>
+</html>

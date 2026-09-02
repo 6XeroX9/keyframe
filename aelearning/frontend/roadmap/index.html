@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .path-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end;
+      margin-bottom: 0;
+    }
+    .path-intro-right {
+      text-align: right;
+      padding-bottom: 4px;
+    }
+    .path-step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--border);
+      transition: background var(--transition);
+    }
+    .step-dot.active { background: var(--accent); }
+    .step-line {
+      height: 1px; flex: 1; background: var(--border);
+    }
+    /* Timeline column left decoration */
+    .timeline-number {
+      font-family: var(--font-display);
+      font-size: clamp(100px, 14vw, 180px);
+      color: var(--accent);
+      opacity: 0.06;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap" class="active">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+    <div class="mobile-nav-actions">
+      <button class="nav-btn-login"  onclick="window.location='/';">LOGIN</button>
+      <button class="nav-btn-signup" onclick="window.location='/';">SIGN UP</button>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a>
+        <span class="breadcrumb-sep">/</span>
+        ROADMAP
+      </div>
+      <div class="path-intro">
+        <div>
+          <span class="section-number">YOUR LEARNING PATH</span>
+          <h1 class="page-title">CHOOSE<br>YOUR LEVEL.</h1>
+          <p class="page-subtitle">Three structured tiers — from absolute beginner to advanced compositor. Follow the path or jump in wherever you are.</p>
+        </div>
+        <div class="path-intro-right">
+          <div style="font-family:var(--font-display);font-size:14px;letter-spacing:0.1em;color:var(--text-secondary);margin-bottom:12px;">TOTAL PATH</div>
+          <div id="total-videos" style="font-family:var(--font-display);font-size:64px;color:var(--accent);line-height:1;">12</div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--text-secondary);text-transform:uppercase;">Curated Videos</div>
+          <div class="path-step-indicator">
+            <div class="step-dot active"></div>
+            <div class="step-line"></div>
+            <div class="step-dot active"></div>
+            <div class="step-line"></div>
+            <div class="step-dot active"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATH CARDS -->
+  <section style="padding:80px 0 120px;background:var(--bg-primary);">
+    <div class="container">
+      <div class="path-layout" id="path-layout">
+
+        <!-- BEGINNER -->
+        <a href="/roadmap/beginner" class="level-card reveal">
+          <div class="timeline-number">01</div>
+          <div class="level-card-tag">ENTRY LEVEL</div>
+          <div class="level-card-name">BEGINNER</div>
+          <div class="level-card-desc">Master the fundamentals — layers, keyframes, easing, and your first real animations. No experience needed.</div>
+          <div class="level-card-stats">
+            <div class="level-stat"><span id="count-beginner">4</span> VIDEOS</div>
+            <div class="level-stat">~<span>90</span> MIN</div>
+          </div>
+          <div class="level-card-cta">ENTER LEVEL → </div>
+        </a>
+
+        <div class="path-connector"><span class="path-connector-arrow">→</span></div>
+
+        <!-- INTERMEDIATE -->
+        <a href="/roadmap/intermediate" class="level-card reveal">
+          <div class="timeline-number">02</div>
+          <div class="level-card-tag">LEVEL UP</div>
+          <div class="level-card-name">INTERMEDIATE</div>
+          <div class="level-card-desc">Dive into expressions, shape layers, 3D cameras, and rotoscoping. Start building real motion work.</div>
+          <div class="level-card-stats">
+            <div class="level-stat"><span id="count-intermediate">4</span> VIDEOS</div>
+            <div class="level-stat">~<span>120</span> MIN</div>
+          </div>
+          <div class="level-card-cta">ENTER LEVEL →</div>
+        </a>
+
+        <div class="path-connector"><span class="path-connector-arrow">→</span></div>
+
+        <!-- PRO -->
+        <a href="/roadmap/pro" class="level-card reveal">
+          <div class="timeline-number">03</div>
+          <div class="level-card-tag">PRO MODE</div>
+          <div class="level-card-name">PRO</div>
+          <div class="level-card-desc">Custom expressions, C4D Lite, color science, optical effects. This is where good becomes great.</div>
+          <div class="level-card-stats">
+            <div class="level-stat"><span id="count-pro">4</span> VIDEOS</div>
+            <div class="level-stat">~<span>124</span> MIN</div>
+          </div>
+          <div class="level-card-cta">ENTER LEVEL →</div>
+        </a>
+
+      </div>
+
+      <!-- BOTTOM STRIP -->
+      <div style="border-top:1px solid var(--border);margin-top:20px;padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <p style="font-size:12px;color:var(--text-secondary);">Complete all three levels to go from zero to compositing professional. Not an AE topic? Check <a href="/roadmap/misc" style="color:var(--accent);">Miscellaneous</a>.</p>
+        <a href="/" style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);border:1px solid var(--border);padding:8px 16px;border-radius:var(--card-radius);transition:all var(--transition);">← BACK TO HOME</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid container">
+      <div>
+        <div class="footer-logo">AEPATH</div>
+        <p class="footer-tagline">Free curated learning for After Effects users.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">NAVIGATE</div>
+        <ul class="footer-links">
+          <li><a href="/roadmap">Roadmap</a></li>
+          <li><a href="/playlists">Playlists</a></li>
+          <li><a href="/creators">Creators</a></li>
+          <li><a href="/courses">Courses</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">LEVELS</div>
+        <ul class="footer-links">
+          <li><a href="/roadmap/beginner">Beginner</a></li>
+          <li><a href="/roadmap/intermediate">Intermediate</a></li>
+          <li><a href="/roadmap/pro">Pro</a></li>
+          <li><a href="/roadmap/misc">Miscellaneous</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH · BUILT BY EDITORS FOR EDITORS &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script>
+    async function loadCounts() {
+      try {
+        const levels = ['beginner','intermediate','advanced'];
+        const ids    = ['count-beginner','count-intermediate','count-pro'];
+        let total = 0;
+        for (let i = 0; i < levels.length; i++) {
+          const d = await apiFetch(`/videos?level=${levels[i]}&limit=500`);
+          const c = d.videos?.length || 4;
+          document.getElementById(ids[i]).textContent = c;
+          total += c;
+        }
+        document.getElementById('total-videos').textContent = total;
+      } catch {}
+    }
+    loadCounts();
+  </script>
+</body>
+</html>

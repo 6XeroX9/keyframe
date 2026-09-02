@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creators — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    /* ── CREATOR TRADING CARD GRID ───────────────────────────────── */
+    .creators-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* ── TRADING CARD ────────────────────────────────────────────── */
+    .creator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 14px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color var(--transition), transform 0.3s ease;
+    }
+    .creator-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    /* Banner — its own rounded box, floating inside the card with margin.
+       Only this element clips (for its rounded corners); the avatar ring
+       below lives outside it, so it can never get cut off. */
+    .cc-banner-wrap { position: relative; margin-bottom: 32px; }
+    .cc-banner { height: 92px; border-radius: 16px; overflow: hidden; }
+    .cc-badge {
+      position: absolute; top: 9px; right: 9px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 9px; border-radius: 999px;
+    }
+    .cc-avatar-ring {
+      position: absolute; bottom: -24px; left: 14px;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--bg-card); padding: 3px;
+      transition: box-shadow 0.3s ease;
+    }
+    .creator-card:hover .cc-avatar-ring { box-shadow: 0 0 16px rgba(255,77,0,0.35); }
+    .cc-avatar {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 20px; color: var(--accent);
+      text-transform: uppercase; overflow: hidden;
+    }
+    .cc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Card body */
+    .cc-body { position: relative; }
+    .cc-name {
+      font-family: var(--font-display); font-size: 17px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--text-primary); line-height: 1.1;
+      margin-bottom: 3px;
+    }
+    .creator-card:hover .cc-name { animation: glitch-a 0.3s steps(1) 1; }
+    .cc-handle {
+      font-size: 11px; color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* Stats row */
+    .cc-stats-row {
+      display: flex; justify-content: space-between;
+      padding: 12px 4px; margin-bottom: 14px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cc-stat-item { text-align: center; }
+    .cc-stat-item strong {
+      display: block; font-family: var(--font-display); font-size: 17px; color: var(--accent);
+    }
+    .cc-stat-item span {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+
+    /* CTA */
+    .cc-cta {
+      display: block; width: 100%; text-align: center;
+      padding: 11px; border-radius: 999px;
+      background: var(--accent); color: #000;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      border: none; transition: opacity 0.2s ease;
+    }
+    .creator-card:hover .cc-cta { opacity: 0.85; }
+
+    /* Featured creator spotlight */
+    .creator-spotlight {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--card-radius); padding: 32px;
+      margin-bottom: 48px;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 32px; align-items: center;
+    }
+    .spotlight-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 32px; color: var(--accent);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .spotlight-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .spotlight-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .spotlight-name {
+      font-family: var(--font-display); font-size: 32px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-primary); margin-bottom: 8px;
+    }
+    .spotlight-desc {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) { .creators-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 720px)  { .creators-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px)  {
+      .creators-grid { grid-template-columns: 1fr; }
+      .creator-spotlight { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators" class="active">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>CREATORS
+      </div>
+      <span class="section-number">THE TEACHERS</span>
+      <h1 class="page-title">CREATORS.</h1>
+      <p class="page-subtitle">The best After Effects educators on YouTube — curated, ranked, and organized by specialty.</p>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Filter -->
+      <div class="filter-bar" style="margin-bottom:40px;" id="filter-bar">
+        <span class="filter-label">SPECIALTY:</span>
+        <button class="filter-btn active" data-tag="all">ALL</button>
+      </div>
+
+      <!-- Spotlight -->
+      <div id="spotlight-wrap"></div>
+
+      <!-- Grid header -->
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--accent);">
+        <span style="font-family:var(--font-display);font-size:13px;letter-spacing:0.2em;text-transform:uppercase;">ALL CREATORS</span>
+        <span id="creator-count" style="font-size:10px;color:var(--text-secondary);letter-spacing:0.1em;">— EDUCATORS</span>
+      </div>
+
+      <div class="creators-grid" id="creators-grid"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script>
+    const DUMMY_CREATORS = [
+      { id:'c1', name:'School of Motion',  handle:'@schoolofmotion',  videos:24, playlists:4, specialty:'Motion Design fundamentals, industry-standard workflows.', tags:['motion','workflow'], channel:'YOUTUBE', spotlight:true },
+      { id:'c2', name:'Video Copilot',     handle:'@videocopilot',    videos:18, playlists:3, specialty:'VFX, optical flares, plugins, and element 3D.',          tags:['vfx'],             channel:'YOUTUBE' },
+      { id:'c3', name:'Evan Abrams',       handle:'@evanabrams',      videos:14, playlists:2, specialty:'Fundamentals, 3D camera, and clean technique.',          tags:['motion','workflow'],channel:'YOUTUBE' },
+      { id:'c4', name:'Mt. Mograph',       handle:'@mtmograph',       videos:12, playlists:2, specialty:'Expressions, code-driven animation, and rigging.',       tags:['expressions'],      channel:'YOUTUBE' },
+      { id:'c5', name:'Jake In Motion',    handle:'@jakeinmotion',    videos:10, playlists:1, specialty:'Keyframe timing, easing, and motion principles.',        tags:['motion'],           channel:'YOUTUBE' },
+      { id:'c6', name:'Ukramedia',         handle:'@ukramedia',       videos:9,  playlists:2, specialty:'Text animation, presets, and productivity tips.',        tags:['workflow'],         channel:'YOUTUBE' },
+      { id:'c7', name:'Motion Bro',        handle:'@motionbro',       videos:8,  playlists:1, specialty:'Motion blur, speed, and timing techniques.',             tags:['motion','vfx'],     channel:'YOUTUBE' },
+      { id:'c8', name:'Cullen Kelly',      handle:'@cullenkelly',     videos:7,  playlists:1, specialty:'Color science, grading, and Lumetri workflows.',         tags:['workflow'],         channel:'YOUTUBE' },
+    ];
+
+    // Deterministic per-creator gradient — same name always produces the same
+    // gradient, so it doesn't shift on every reload, but needs no fetched image.
+    function hashSeed(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
+      return Math.abs(h);
+    }
+    function gradientFor(seed) {
+      const h = hashSeed(seed);
+      const hue1 = h % 360;
+      const hue2 = (hue1 + 50 + (h >> 8) % 70) % 360;
+      const angle = (h >> 4) % 360;
+      return `linear-gradient(${angle}deg, hsl(${hue1} 70% 38%), hsl(${hue2} 75% 24%))`;
+    }
+
+    function avatarImg(url, initials) {
+      if (!url) return initials;
+      return `<img src="${escHtml(url)}" alt="" onerror="this.remove();this.parentElement.textContent='${initials}';">`;
+    }
+
+    function buildSpotlight(c) {
+      const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      const avatar = avatarImg(c.avatar_url, initials);
+      document.getElementById('spotlight-wrap').innerHTML = `
+        <div class="creator-spotlight reveal">
+          <div class="spotlight-avatar">${avatar}</div>
+          <div>
+            <div class="spotlight-tag">★ FEATURED CREATOR</div>
+            <div class="spotlight-name">${escHtml(c.name)}</div>
+            <div class="spotlight-desc">${escHtml(c.specialty||'')} <span style="color:var(--accent);font-weight:600;">${c.videos} videos</span> curated on AEPath.</div>
+          </div>
+        </div>`;
+    }
+
+    function buildCard(c, idx) {
+      const div = document.createElement('div');
+      div.className = 'creator-card reveal';
+      div.dataset.tags = (c.tags||[]).join(',');
+      const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      const avatar = avatarImg(c.avatar_url, initials);
+      const badgeTag = (c.tags||[])[0];
+      const bannerBg = c.banner_url
+        ? `background-image:url('${escHtml(c.banner_url)}');background-size:cover;background-position:center;`
+        : `background:${gradientFor(c.id || c.name)};`;
+      div.innerHTML = `
+        <div class="cc-banner-wrap">
+          <div class="cc-banner" style="${bannerBg}"></div>
+          ${badgeTag ? `<span class="cc-badge">${escHtml(badgeTag)}</span>` : ''}
+          <div class="cc-avatar-ring"><div class="cc-avatar">${avatar}</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">${escHtml(c.name)}</div>
+          <div class="cc-handle">${escHtml(c.handle || c.specialty || '')}</div>
+          <div class="cc-stats-row">
+            <div class="cc-stat-item"><strong>${c.videos||0}</strong><span>VIDEOS</span></div>
+            <div class="cc-stat-item"><strong>${c.playlists||0}</strong><span>LISTS</span></div>
+            <div class="cc-stat-item"><strong>${(c.tags||[]).length}</strong><span>TOPICS</span></div>
+          </div>
+          <button type="button" class="cc-cta">VIEW CREATOR →</button>
+        </div>`;
+      return div;
+    }
+
+    const TAG_LABELS = {
+      motion: 'MOTION', vfx: 'VFX', element3d: 'ELEMENT 3D', shape: 'SHAPE LAYERS',
+      saas: 'SAAS', amv: 'AMV / ANIME', musicviz: 'MUSIC VISUALIZER', type: 'KINETIC TYPE',
+      retro: 'RETRO / VINTAGE', vox: 'DOCUMENTARY', expressions: 'EXPRESSIONS',
+      biz: 'BUSINESS', intl: 'INTERNATIONAL', niche: 'NICHE', other: 'OTHER',
+    };
+
+    function buildFilters(creators) {
+      const bar = document.getElementById('filter-bar');
+      const tags = [...new Set(creators.flatMap(c => c.tags || []))].sort();
+      bar.querySelectorAll('.filter-btn[data-tag]:not([data-tag="all"])').forEach(b => b.remove());
+      tags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.tag = tag;
+        btn.textContent = TAG_LABELS[tag] || tag.toUpperCase();
+        bar.appendChild(btn);
+      });
+    }
+
+    async function loadCreators() {
+      let creators = DUMMY_CREATORS;
+      try {
+        const d = await apiFetch('/creators');
+        if (d.creators?.length) creators = d.creators;
+      } catch {}
+
+      const spotlight = creators.find(c => c.spotlight || c.is_featured);
+      if (spotlight) buildSpotlight(spotlight);
+
+      buildFilters(creators);
+
+      const grid = document.getElementById('creators-grid');
+      creators.forEach((c, i) => grid.appendChild(buildCard(c, i)));
+      document.getElementById('creator-count').textContent = `${creators.length} EDUCATORS`;
+
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 60);
+        });
+      }, 100);
+    }
+
+    document.getElementById('filter-bar').addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag = btn.dataset.tag;
+      document.querySelectorAll('.creator-card').forEach(card => {
+        const cardTags = (card.dataset.tags || '').split(',').filter(Boolean);
+        const match = tag === 'all' || cardTags.includes(tag);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+
+    loadCreators();
+  </script>
+</body>
+</html>

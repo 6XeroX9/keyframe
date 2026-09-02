@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    /* ── EDITORIAL HERO STATS ────────────────────────────────────── */
+    .courses-hero-stats {
+      display: flex; gap: 40px; margin-top: 32px; flex-wrap: wrap;
+    }
+    .chs-item {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .chs-val {
+      font-family: var(--font-display); font-size: 48px;
+      color: var(--accent); line-height: 1;
+    }
+    .chs-key {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+
+    /* ── COURSE GRID ─────────────────────────────────────────────── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    /* ── COURSE CARD ─────────────────────────────────────────────── */
+    .course-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--card-radius); overflow: hidden;
+      display: flex; flex-direction: column;
+      position: relative;
+      transition: border-color var(--transition), transform 0.3s ease;
+    }
+    .course-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .course-card.locked {
+      opacity: 0.5; pointer-events: none;
+    }
+    .course-card.locked::after {
+      content: 'LOCKED';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 24px; letter-spacing: 0.2em;
+      color: var(--text-secondary);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+
+    /* Thumb with level stripe */
+    .cc-thumb {
+      position: relative; aspect-ratio: 16/9; overflow: hidden;
+      background: var(--bg-secondary);
+    }
+    .cc-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .course-card:hover .cc-thumb img { transform: scale(1.05); }
+    .cc-thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 32px; color: var(--border);
+    }
+    .cc-level-stripe {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .stripe-beginner     { background: #4CAF50; }
+    .stripe-intermediate { background: #FF9800; }
+    .stripe-pro          { background: var(--accent); }
+
+    /* Free / paid badge */
+    .cc-price-badge {
+      position: absolute; top: 10px; right: 10px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 2px;
+    }
+    .badge-free { background: rgba(76,175,80,0.15); border: 1px solid #4CAF50; color: #4CAF50; }
+    .badge-paid { background: rgba(255,77,0,0.12); border: 1px solid var(--accent); color: var(--accent); }
+
+    /* Card body */
+    .cc-body {
+      padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px;
+    }
+    .cc-meta-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .cc-level-tag {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 2px; border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .cc-platform-tag {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .cc-title {
+      font-family: var(--font-display); font-size: 19px; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--text-primary); line-height: 1.15;
+    }
+    .cc-instructor {
+      font-size: 11px; color: var(--text-secondary);
+    }
+    .cc-desc {
+      font-size: 12px; color: var(--text-secondary); line-height: 1.6; flex: 1;
+    }
+
+    /* Stats row */
+    .cc-stats-row {
+      display: flex; gap: 16px; padding-top: 12px;
+      border-top: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .cc-stat-item {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .cc-stat-item strong { color: var(--text-primary); }
+
+    /* CTA */
+    .cc-cta {
+      display: block; margin-top: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: #000; background: var(--accent); padding: 12px 0;
+      border-radius: var(--card-radius); text-align: center; text-decoration: none;
+      transition: opacity var(--transition);
+    }
+    .cc-cta:hover { opacity: 0.85; }
+    .cc-cta-outline {
+      display: block; margin-top: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent); padding: 12px 0;
+      border-radius: var(--card-radius); text-align: center; text-decoration: none;
+      transition: all var(--transition);
+    }
+    .cc-cta-outline:hover { background: var(--accent); color: #000; }
+
+    /* ── COMING SOON BANNER ──────────────────────────────────────── */
+    .coming-soon-banner {
+      background: var(--bg-card); border: 1px dashed var(--border);
+      border-radius: var(--card-radius); padding: 40px;
+      text-align: center; margin-top: 48px;
+    }
+    .csb-title {
+      font-family: var(--font-display); font-size: 24px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
+    }
+    .csb-sub {
+      font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 900px) { .courses-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .courses-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses" class="active">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>COURSES
+      </div>
+      <span class="section-number">STRUCTURED LEARNING</span>
+      <h1 class="page-title">COURSES.</h1>
+      <p class="page-subtitle">Full structured courses from the best AE educators. Free and paid — all hand-picked.</p>
+      <div class="courses-hero-stats" id="hero-stats">
+        <div class="chs-item"><span class="chs-val" id="stat-free">6</span><span class="chs-key">FREE COURSES</span></div>
+        <div class="chs-item"><span class="chs-val" id="stat-paid">2</span><span class="chs-key">PREMIUM</span></div>
+        <div class="chs-item"><span class="chs-val">3</span><span class="chs-key">LEVELS</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Filter -->
+      <div class="filter-bar" style="margin-bottom:40px;">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="free">FREE</button>
+        <button class="filter-btn" data-filter="paid">PAID</button>
+        <button class="filter-btn" data-filter="beginner">BEGINNER</button>
+        <button class="filter-btn" data-filter="intermediate">INTERMEDIATE</button>
+        <button class="filter-btn" data-filter="pro">PRO</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="courses-grid" id="courses-grid"></div>
+
+      <!-- Coming soon -->
+      <div class="coming-soon-banner reveal">
+        <div class="csb-title">MORE COURSES COMING SOON</div>
+        <div class="csb-sub">New courses are curated and added regularly. Check back or follow updates.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script>
+    const DUMMY_COURSES = [
+      {
+        id:'co1', title:'After Effects for Beginners',
+        instructor:'School of Motion', platform:'YOUTUBE',
+        level:'beginner', price:'free',
+        lessons:12, duration:'4h 30m',
+        desc:'The complete beginner guide — interface, layers, keyframes, and your first real animation. No experience required.',
+        youtube_id:'9KKhfXJo-zg', url:'#', locked:false
+      },
+      {
+        id:'co2', title:'Motion Design Bootcamp',
+        instructor:'School of Motion', platform:'SCHOOLOFMOTION',
+        level:'intermediate', price:'paid',
+        lessons:40, duration:'20h',
+        desc:'Industry-standard motion design skills. Principles, theory, and software — the definitive paid course.',
+        youtube_id:'HBq_pUJWd7s', url:'#', locked:false
+      },
+      {
+        id:'co3', title:'Expressions 101',
+        instructor:'Mt. Mograph', platform:'YOUTUBE',
+        level:'intermediate', price:'free',
+        lessons:8, duration:'3h 15m',
+        desc:'Unlock the power of expressions. Wiggle, loop, link properties, and start writing your own.',
+        youtube_id:'v7by6RLTO_4', url:'#', locked:false
+      },
+      {
+        id:'co4', title:'VFX Compositing Fundamentals',
+        instructor:'Video Copilot', platform:'YOUTUBE',
+        level:'intermediate', price:'free',
+        lessons:10, duration:'5h',
+        desc:'Track footage, composite elements, and build realistic VFX shots step by step.',
+        youtube_id:'rAVxSCF7gvw', url:'#', locked:false
+      },
+      {
+        id:'co5', title:'Advanced Expression Rigging',
+        instructor:'Mt. Mograph', platform:'YOUTUBE',
+        level:'pro', price:'free',
+        lessons:6, duration:'2h 45m',
+        desc:'Build complex character and UI rigs with expressions. Sliders, controllers, and modular systems.',
+        youtube_id:'Os-oFj4XURM', url:'#', locked:false
+      },
+      {
+        id:'co6', title:'Color Grading in After Effects',
+        instructor:'Cullen Kelly', platform:'YOUTUBE',
+        level:'pro', price:'free',
+        lessons:7, duration:'3h 10m',
+        desc:'Color science, Lumetri, LUTs, and finishing your motion work to a broadcast standard.',
+        youtube_id:'UeJeq4PBXLA', url:'#', locked:false
+      },
+      {
+        id:'co7', title:'Cinema 4D Lite + AE Pipeline',
+        instructor:'School of Motion', platform:'SCHOOLOFMOTION',
+        level:'pro', price:'paid',
+        lessons:20, duration:'10h',
+        desc:'The full 3D workflow inside After Effects — modelling basics, lighting, and compositing C4D renders.',
+        youtube_id:'dHR3tFiCLU4', url:'#', locked:true
+      },
+      {
+        id:'co8', title:'UI & App Animation',
+        instructor:'Jake In Motion', platform:'YOUTUBE',
+        level:'beginner', price:'free',
+        lessons:9, duration:'2h 50m',
+        desc:'Prototype and animate UI screens. Ideal for product designers learning motion.',
+        youtube_id:'wX0V3qCMcnk', url:'#', locked:false
+      },
+    ];
+
+    const stripeMap = { beginner:'stripe-beginner', intermediate:'stripe-intermediate', pro:'stripe-pro' };
+
+    function buildCard(c) {
+      const div = document.createElement('div');
+      div.className = 'course-card reveal' + (c.locked ? ' locked' : '');
+      div.dataset.level = c.level || '';
+      div.dataset.price = c.price || 'free';
+
+      const thumb = c.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${c.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="cc-thumb-placeholder">▶</div>`;
+      const badgeClass = c.price === 'paid' ? 'badge-paid' : 'badge-free';
+      const badgeText  = c.price === 'paid' ? 'PAID' : 'FREE';
+      const stripe = stripeMap[c.level] || '';
+      const ctaHtml = c.price === 'free'
+        ? `<a href="${escHtml(c.url||'#')}" class="cc-cta" target="_blank" rel="noopener">START COURSE →</a>`
+        : `<a href="${escHtml(c.url||'#')}" class="cc-cta-outline" target="_blank" rel="noopener">VIEW COURSE →</a>`;
+
+      div.innerHTML = `
+        <div class="cc-thumb">
+          <div class="cc-level-stripe ${stripe}"></div>
+          ${thumb}
+          <span class="cc-price-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-meta-row">
+            <span class="cc-level-tag">${escHtml((c.level||'').toUpperCase())}</span>
+            <span class="cc-platform-tag">${escHtml(c.platform||'')}</span>
+          </div>
+          <div class="cc-title">${escHtml(c.title)}</div>
+          <div class="cc-instructor">${escHtml(c.instructor||'')}</div>
+          <div class="cc-desc">${escHtml(c.desc||'')}</div>
+          <div class="cc-stats-row">
+            <span class="cc-stat-item"><strong>${c.lessons||0}</strong> LESSONS</span>
+            <span class="cc-stat-item"><strong>${escHtml(c.duration||'—')}</strong> TOTAL</span>
+          </div>
+          ${ctaHtml}
+        </div>`;
+      return div;
+    }
+
+    async function loadCourses() {
+      let courses = DUMMY_COURSES;
+      try {
+        const d = await apiFetch('/courses?limit=20');
+        if (d.courses?.length) courses = d.courses;
+      } catch {}
+
+      const grid = document.getElementById('courses-grid');
+      courses.forEach(c => grid.appendChild(buildCard(c)));
+
+      const free = courses.filter(c => c.price === 'free').length;
+      const paid = courses.filter(c => c.price === 'paid').length;
+      document.getElementById('stat-free').textContent = free;
+      document.getElementById('stat-paid').textContent = paid;
+
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 70);
+        });
+      }, 100);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.course-card').forEach(card => {
+          let show = true;
+          if (f === 'free')  show = card.dataset.price === 'free';
+          else if (f === 'paid') show = card.dataset.price === 'paid';
+          else if (f !== 'all') show = card.dataset.level === f;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+
+    loadCourses();
+  </script>
+</body>
+</html>

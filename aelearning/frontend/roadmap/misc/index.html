@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-level="misc">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miscellaneous — Keyframe</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .level-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(136,136,128,0.08));
+      pointer-events: none;
+    }
+    .level-badge-row { display: flex; align-items: center; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+    .lbadge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; border: 1px solid var(--border); color: var(--text-secondary);
+      border-radius: var(--card-radius);
+    }
+    .video-list-header {
+      display: grid;
+      grid-template-columns: 48px 100px 1fr auto auto auto auto;
+      gap: 16px;
+      padding: 8px 16px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .vlh-col { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); }
+    .vr-software {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 2px 8px;
+      border: 1px solid var(--border); border-radius: 2px;
+      color: var(--text-secondary); align-self: center; white-space: nowrap;
+    }
+    .video-row { opacity: 0; }
+    .video-row.entered { animation: row-enter 0.4s ease forwards; }
+    @media (max-width: 680px) {
+      .video-list-header { grid-template-columns: 40px 72px 1fr auto; }
+      .video-list-header .vlh-col:nth-child(4),
+      .video-list-header .vlh-col:nth-child(6) { display: none; }
+      .video-row .vr-software, .video-row .vr-watch, .video-row .vr-yt { display: none; }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">KEYFRAME <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap" class="active">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="level-hero-bg"></div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>
+        <a href="/roadmap">ROADMAP</a><span class="breadcrumb-sep">/</span>
+        MISCELLANEOUS
+      </div>
+
+      <div class="terminal-window" style="max-width:560px;margin-bottom:28px;">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot"></div><div class="terminal-dot"></div><div class="terminal-dot"></div>
+          <span class="terminal-titlebar-label">Keyframe — misc.aep</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-prompt">$</span><span class="t-cmd"> load --level=misc --note=adjacent-tools</span></div>
+          <div id="terminal-status" class="t-comment">// initializing...</div>
+        </div>
+      </div>
+
+      <span class="section-number">— / MISCELLANEOUS</span>
+      <h1 class="page-title">OTHER<br>TOOLS.</h1>
+      <p style="color:var(--text-secondary);font-size:14px;max-width:560px;margin-top:12px;">Videos from creators we curate, but that aren't After Effects tutorials — DaVinci Resolve, Premiere Pro, Photoshop, Unreal Engine, and a few career/business picks. Not part of the AE roadmap. We may build these into their own tracks later.</p>
+      <div class="level-badge-row">
+        <span class="lbadge" id="video-count-badge">— VIDEOS</span>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Filter -->
+      <div class="filter-bar" id="filter-bar">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-tag="all">ALL</button>
+      </div>
+
+      <!-- Table header -->
+      <div class="video-list-header">
+        <span class="vlh-col">#</span>
+        <span class="vlh-col">PREVIEW</span>
+        <span class="vlh-col">TITLE</span>
+        <span class="vlh-col">SOFTWARE</span>
+        <span class="vlh-col">STATUS</span>
+        <span class="vlh-col">YT</span>
+        <span class="vlh-col" style="text-align:right;">PLAY</span>
+      </div>
+
+      <!-- Videos -->
+      <div class="video-list" id="video-list"></div>
+    </div>
+  </section>
+
+  <div style="background:var(--bg-secondary);border-top:1px solid var(--border);padding:40px 0;">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div style="font-family:var(--font-display);font-size:13px;letter-spacing:0.1em;color:var(--text-secondary);">LOOKING FOR AFTER EFFECTS?</div>
+      <a href="/roadmap" class="btn btn-accent" style="font-size:11px;padding:12px 24px;">
+        BACK TO ROADMAP →
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 KEYFRAME &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script src="/progress.js"></script>
+  <script>
+    const LEVEL = 'misc';
+    const DUMMY = [];
+
+    const SOFTWARE_PATTERNS = [
+      [/davinci/i, 'DAVINCI RESOLVE'],
+      [/premiere pro/i, 'PREMIERE PRO'],
+      [/photoshop/i, 'PHOTOSHOP'],
+      [/lightroom/i, 'LIGHTROOM'],
+      [/unreal engine/i, 'UNREAL ENGINE'],
+      [/portrait|photograph/i, 'PHOTOGRAPHY'],
+      [/stay broke|price your work|burnout/i, 'CAREER'],
+    ];
+    function softwareOf(title) {
+      for (const [re, label] of SOFTWARE_PATTERNS) if (re.test(title)) return label;
+      return 'OTHER';
+    }
+
+    function buildRow(v, idx) {
+      const div = document.createElement('div');
+      div.className = 'video-row';
+      div.dataset.tags = softwareOf(v.title);
+      div.dataset.id = v.id;
+      const thumb = v.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="vr-thumb-placeholder">▶</div>`;
+      div.innerHTML = `
+        <div class="vr-num">${String(idx+1).padStart(3,'0')}</div>
+        <div class="vr-thumb">${thumb}</div>
+        <div class="vr-info">
+          <div class="vr-title">${escHtml(v.title)}</div>
+          <div class="vr-creator">${escHtml(v.creators?.name||'Unknown channel')}</div>
+        </div>
+        <span class="vr-software">${softwareOf(v.title)}</span>
+        <button type="button" class="vr-watch wt-btn"></button>
+        <a href="${escHtml(v.youtube_url || (v.youtube_id ? `https://www.youtube.com/watch?v=${v.youtube_id}` : '#'))}" target="_blank" rel="noopener" class="vr-yt wt-btn" title="Open on YouTube">YT ↗</a>
+        <div class="vr-play">PLAY ▶</div>`;
+
+      div.querySelector('.vr-yt').addEventListener('click', e => e.stopPropagation());
+
+      const watchBtn = div.querySelector('.vr-watch');
+      const syncWatchBtn = () => {
+        const watched = AEProgress.isWatched(v.id);
+        watchBtn.classList.toggle('active', watched);
+        watchBtn.textContent = watched ? '✓ Watched' : 'Mark Watched';
+      };
+      syncWatchBtn();
+      watchBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        AEProgress.toggleWatched(v.id);
+        syncWatchBtn();
+      });
+
+      div.addEventListener('click', () => openModal(v));
+      return div;
+    }
+
+    async function loadVideos() {
+      const list = document.getElementById('video-list');
+      try {
+        const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
+        renderVideos(d.videos || []);
+      } catch { renderVideos(DUMMY); }
+    }
+
+    function renderVideos(videos) {
+      const list = document.getElementById('video-list');
+      list.innerHTML = '';
+      videos.forEach((v, i) => {
+        const row = buildRow(v, i);
+        list.appendChild(row);
+        setTimeout(() => row.classList.add('entered'), Math.min(60 + i * 20, 900));
+      });
+      document.getElementById('video-count-badge').textContent = `${videos.length} VIDEOS`;
+      document.getElementById('terminal-status').textContent = `// loaded ${videos.length} records — status: OK`;
+      buildSoftwareFilters(videos);
+    }
+
+    function buildSoftwareFilters(videos) {
+      const bar = document.getElementById('filter-bar');
+      const softwares = [...new Set(videos.map(v => softwareOf(v.title)))].sort();
+      bar.querySelectorAll('.filter-btn[data-sw]').forEach(b => b.remove());
+      softwares.forEach(sw => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.sw = sw;
+        btn.textContent = sw;
+        bar.appendChild(btn);
+      });
+      bar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const sw = btn.dataset.sw;
+          document.querySelectorAll('.video-row').forEach(row => {
+            row.style.display = (!sw || row.dataset.tags === sw) ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>

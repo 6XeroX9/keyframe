@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyboard Shortcuts — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .sc-note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+    .sc-group { margin-bottom: 56px; }
+    .sc-group-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .sc-group-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .sc-table {
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      position: relative;
+    }
+    .sc-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .sc-row:last-child { border-bottom: none; }
+    .sc-row:hover { background: var(--accent-muted); }
+    .sc-key {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      border-right: 1px solid var(--border);
+    }
+    .sc-key kbd {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 8px;
+      white-space: nowrap;
+    }
+    .sc-key .plus { color: var(--text-secondary); font-size: 11px; }
+    .sc-desc {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    @media (max-width: 640px) {
+      .sc-row { grid-template-columns: 1fr; }
+      .sc-key { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>
+        SHORTCUTS
+      </div>
+      <span class="section-number">— / REFERENCE</span>
+      <h1 class="page-title">KEYBOARD<br>SHORTCUTS.</h1>
+      <p class="sc-note">The ones you'll actually reach for. Shown for Windows — on Mac, swap <kbd style="font-family:var(--font-mono);font-size:11px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;">Ctrl</kbd> for <kbd style="font-family:var(--font-mono);font-size:11px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;">Cmd</kbd> and <kbd style="font-family:var(--font-mono);font-size:11px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;">Alt</kbd> for <kbd style="font-family:var(--font-mono);font-size:11px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;">Option</kbd>.</p>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container" style="max-width:820px;">
+
+      <div class="sc-group">
+        <div class="sc-group-title">Playback</div>
+        <div class="sc-group-sub">Moving through the timeline without touching the mouse.</div>
+        <div class="sc-table specimen-frame">
+          <div class="sc-row"><div class="sc-key"><kbd>Space</kbd></div><div class="sc-desc">Play / pause</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Page Down</kbd></div><div class="sc-desc">Step forward one frame</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Page Up</kbd></div><div class="sc-desc">Step back one frame</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Shift</kbd><span class="plus">+</span><kbd>Page Down</kbd></div><div class="sc-desc">Jump forward 10 frames</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Home</kbd></div><div class="sc-desc">Go to start of composition</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>End</kbd></div><div class="sc-desc">Go to end of composition</div></div>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-title">Reveal Properties</div>
+        <div class="sc-group-sub">The single most-used shortcut family in After Effects — select a layer, then press.</div>
+        <div class="sc-table specimen-frame">
+          <div class="sc-row"><div class="sc-key"><kbd>A</kbd></div><div class="sc-desc">Anchor Point</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>P</kbd></div><div class="sc-desc">Position</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>S</kbd></div><div class="sc-desc">Scale</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>R</kbd></div><div class="sc-desc">Rotation</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>T</kbd></div><div class="sc-desc">Opacity</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Shift</kbd><span class="plus">+</span><kbd>another key</kbd></div><div class="sc-desc">Show another property alongside the one already open</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>U</kbd></div><div class="sc-desc">Show every keyframed property on the layer</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>U</kbd><kbd>U</kbd></div><div class="sc-desc">Show every property changed from its default (tap twice)</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>E</kbd></div><div class="sc-desc">Show effects applied to the layer</div></div>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-title">Keyframes &amp; Easing</div>
+        <div class="sc-group-sub">Where every animation stops looking robotic.</div>
+        <div class="sc-table specimen-frame">
+          <div class="sc-row"><div class="sc-key"><kbd>F9</kbd></div><div class="sc-desc">Easy Ease selected keyframes</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Shift</kbd><span class="plus">+</span><kbd>F9</kbd></div><div class="sc-desc">Easy Ease In</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F9</kbd></div><div class="sc-desc">Easy Ease Out</div></div>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-title">Layers &amp; Timing</div>
+        <div class="sc-group-sub">Trimming and organizing without the Layer menu.</div>
+        <div class="sc-table specimen-frame">
+          <div class="sc-row"><div class="sc-key"><kbd>[</kbd></div><div class="sc-desc">Move the layer's start to the current time</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>]</kbd></div><div class="sc-desc">Move the layer's end to the current time</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><div class="sc-desc">Duplicate the selected layer</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>C</kbd></div><div class="sc-desc">Precompose the selection</div></div>
+          <div class="sc-row"><div class="sc-key"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>T</kbd></div><div class="sc-desc">Enable time remapping</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+</body>
+</html>

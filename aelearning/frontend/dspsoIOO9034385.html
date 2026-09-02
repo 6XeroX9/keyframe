@@ -1,0 +1,254 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <div id="playlist-import-status" style="margin-top:12px;font-size:12px;color:var(--text-secondary);white-space:pre-wrap;"></div>
+      </div>
+
+      <div class="inline-form" id="playlists-form">
+        <div class="form-title" id="playlists-form-title">CREATE PLAYLIST</div>
+        <input type="hidden" id="playlist-edit-id" />
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Name</label>
+            <input type="text" id="playlist-name" placeholder="The AE Starter Pack" />
+          </div>
+          <div class="form-field">
+            <label>Creator</label>
+            <select id="playlist-creator"></select>
+          </div>
+          <div class="form-field full">
+            <label>Description</label>
+            <textarea id="playlist-description" placeholder="Brief description..."></textarea>
+          </div>
+          <div class="form-field full">
+            <label>Featured</label>
+            <input type="checkbox" class="toggle" id="playlist-featured" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="playlist-save-btn">SAVE PLAYLIST</button>
+          <button class="btn-cancel" id="playlists-form-cancel">CANCEL</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Creator</th>
+              <th>Videos</th>
+              <th>Featured</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="playlists-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CREATORS PANEL -->
+    <div class="admin-panel" id="panel-creators">
+      <div class="panel-header">
+        <h2 class="panel-title">CREATORS</h2>
+        <button class="btn-add" id="creators-add-btn">+ ADD CREATOR</button>
+      </div>
+
+      <div class="inline-form" id="creators-form">

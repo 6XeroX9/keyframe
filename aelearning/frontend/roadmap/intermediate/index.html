@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-level="intermediate">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intermediate Path — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .level-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 55%, rgba(255,77,0,0.09));
+      pointer-events: none;
+    }
+    .level-badge-row {
+      display: flex; align-items: center; gap: 16px; margin-top: 24px;
+    }
+    .lbadge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; border: 1px solid var(--accent); color: var(--accent);
+      border-radius: var(--card-radius);
+    }
+    .lbadge-gray { border-color: var(--border); color: var(--text-secondary); }
+
+    .video-list-header {
+      display: grid;
+      grid-template-columns: 48px 100px 1fr auto auto auto auto;
+      gap: 16px;
+      padding: 8px 16px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .vlh-col {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+
+    /* Skill level indicator */
+    .skill-meter {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--card-radius); padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 32px;
+      flex-wrap: wrap;
+    }
+    .skill-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+    .skill-pips {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .skill-pip {
+      width: 24px; height: 4px; border-radius: 2px;
+      background: var(--border);
+      transition: background 0.4s ease;
+    }
+    .skill-pip.lit { background: var(--accent); }
+    .skill-stat {
+      font-family: var(--font-display); font-size: 28px; color: var(--accent);
+    }
+    .skill-stat-label {
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-secondary); display: block; margin-top: 2px;
+    }
+
+    /* Difficulty badge on rows */
+    .vr-diff {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 2px 8px;
+      border: 1px solid var(--border); border-radius: 2px;
+      color: var(--text-secondary); white-space: nowrap;
+      align-self: center;
+    }
+    .vr-diff-med { border-color: var(--accent); color: var(--accent); }
+
+    /* Level nav */
+    .level-nav-strip {
+      background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 40px 0;
+    }
+    .level-nav-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+
+    /* Stagger entrance */
+    .video-row { opacity: 0; }
+    .video-row.entered { animation: row-enter 0.4s ease forwards; }
+
+    .module-group { margin-top: 36px; }
+    .module-group:first-child { margin-top: 0; }
+    .module-heading {
+      display: flex; align-items: baseline; gap: 10px;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+    .module-heading h3 {
+      font-family: var(--font-display); font-size: 16px; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--text-primary); font-weight: 400;
+    }
+    .module-heading .module-count {
+      font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap" class="active">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="level-hero-bg"></div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>
+        <a href="/roadmap">ROADMAP</a><span class="breadcrumb-sep">/</span>
+        INTERMEDIATE
+      </div>
+
+      <!-- Terminal header -->
+      <div class="terminal-window" style="max-width:560px;margin-bottom:28px;">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot"></div><div class="terminal-dot"></div><div class="terminal-dot"></div>
+          <span class="terminal-titlebar-label">AEPath — intermediate_path.aep</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-prompt">$</span><span class="t-cmd"> load --level=intermediate --prereq=beginner</span></div>
+          <div id="terminal-status" class="t-comment">// initializing...</div>
+          <div class="t-comment">// prerequisite: BEGINNER PATH recommended</div>
+        </div>
+      </div>
+
+      <span class="section-number">02 / INTERMEDIATE</span>
+      <h1 class="page-title">LEVEL<br>UP.</h1>
+      <div class="level-badge-row">
+        <span class="lbadge">INTERMEDIATE</span>
+        <span class="lbadge lbadge-gray" id="video-count-badge">— VIDEOS</span>
+        <span class="lbadge lbadge-gray">EXPRESSIONS + 3D</span>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Skill meter -->
+      <div class="skill-meter">
+        <div>
+          <span class="skill-label">SKILL LEVEL</span>
+          <div class="skill-pips" id="skill-pips">
+            <div class="skill-pip lit"></div>
+            <div class="skill-pip lit"></div>
+            <div class="skill-pip lit"></div>
+            <div class="skill-pip"></div>
+            <div class="skill-pip"></div>
+          </div>
+        </div>
+        <div>
+          <span class="skill-stat" id="prog-done">0</span>
+          <span class="skill-stat-label">COMPLETED</span>
+        </div>
+        <div>
+          <span class="skill-stat" id="prog-total">4</span>
+          <span class="skill-stat-label">TOTAL</span>
+        </div>
+        <div style="flex:1;text-align:right;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-secondary);">
+          PREREQUISITE: <a href="/roadmap/beginner" style="color:var(--accent);">BEGINNER PATH →</a>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filter-bar" id="filter-bar">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-tag="all">ALL</button>
+      </div>
+
+      <!-- Table header -->
+      <div class="video-list-header">
+        <span class="vlh-col">#</span>
+        <span class="vlh-col">PREVIEW</span>
+        <span class="vlh-col">TITLE</span>
+        <span class="vlh-col">DURATION</span>
+        <span class="vlh-col">STATUS</span>
+        <span class="vlh-col">YT</span>
+        <span class="vlh-col" style="text-align:right;">PLAY</span>
+      </div>
+
+      <!-- Videos, grouped by module -->
+      <div id="video-groups"></div>
+    </div>
+  </section>
+
+  <!-- Level nav -->
+  <div class="level-nav-strip">
+    <div class="container level-nav-inner">
+      <a href="/roadmap/beginner" class="btn" style="font-size:11px;padding:12px 24px;border:1px solid var(--border);color:var(--text-secondary);">
+        ← BACK: BEGINNER
+      </a>
+      <div style="font-family:var(--font-display);font-size:13px;letter-spacing:0.1em;color:var(--text-secondary);">READY TO GO PRO?</div>
+      <a href="/roadmap/pro" class="btn btn-accent" style="font-size:11px;padding:12px 24px;">
+        NEXT: PRO →
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script src="/progress.js"></script>
+  <script>
+    const LEVEL = 'intermediate';
+    const DUMMY = [
+      { id:'i1', title:'Expressions Crash Course',        creators:{name:'Mt. Mograph'}, duration:'24:30', youtube_id:'HBq_pUJWd7s', tags:['expressions'], diff:'INTERMEDIATE' },
+      { id:'i2', title:'Shape Layer Mastery',             creators:{name:'School of Motion'}, duration:'31:15', youtube_id:'9KKhfXJo-zg', tags:['shapes'], diff:'INTERMEDIATE' },
+      { id:'i3', title:'3D Camera Techniques',            creators:{name:'Evan Abrams'}, duration:'19:45', youtube_id:'UeJeq4PBXLA', tags:['3d'], diff:'MID-HARD' },
+      { id:'i4', title:'Advanced Masking & Rotobrush',    creators:{name:'Video Copilot'}, duration:'27:00', youtube_id:'wX0V3qCMcnk', tags:['masking'], diff:'INTERMEDIATE' },
+    ];
+
+    function buildRow(v, idx) {
+      const div = document.createElement('div');
+      div.className = 'video-row';
+      div.dataset.tags = (v.tags||[]).join(',');
+      div.dataset.id = v.id;
+      const thumb = v.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="vr-thumb-placeholder">▶</div>`;
+      div.innerHTML = `
+        <div class="vr-num">${String(idx+1).padStart(3,'0')}</div>
+        <div class="vr-thumb">${thumb}</div>
+        <div class="vr-info">
+          <div class="vr-title">${escHtml(v.title)}</div>
+          <div class="vr-creator">${escHtml(v.creators?.name||'')}</div>
+        </div>
+        <div class="vr-duration">[${escHtml(v.duration||'')}]</div>
+        <button type="button" class="vr-watch wt-btn"></button>
+        <a href="${escHtml(v.youtube_url || (v.youtube_id ? `https://www.youtube.com/watch?v=${v.youtube_id}` : '#'))}" target="_blank" rel="noopener" class="vr-yt wt-btn" title="Open on YouTube">YT ↗</a>
+        <div class="vr-play">PLAY ▶</div>`;
+
+      div.querySelector('.vr-yt').addEventListener('click', e => e.stopPropagation());
+
+      const watchBtn = div.querySelector('.vr-watch');
+      const syncWatchBtn = () => {
+        const watched = AEProgress.isWatched(v.id);
+        watchBtn.classList.toggle('active', watched);
+        watchBtn.textContent = watched ? '✓ Watched' : 'Mark Watched';
+      };
+      syncWatchBtn();
+      watchBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        AEProgress.toggleWatched(v.id);
+        syncWatchBtn();
+        updateProgress();
+      });
+
+      div.addEventListener('click', () => openModal(v));
+      return div;
+    }
+
+    function updateProgress() {
+      const ids = [...document.querySelectorAll('.video-row')].map(r => r.dataset.id);
+      const total = ids.length;
+      const watched = AEProgress.watchedCount(ids);
+      document.getElementById('prog-done').textContent = watched;
+      document.getElementById('prog-total').textContent = total;
+      const ratio = total ? watched / total : 0;
+      document.querySelectorAll('.skill-pip').forEach((p, i) => {
+        p.classList.toggle('lit', i < Math.round(ratio * 5));
+      });
+    }
+
+    const MODULE_ORDER = [
+      '3D Layers & Camera', 'Expressions', 'Puppet Tool', 'Roto & Masking', 'Motion Tracking',
+      'Shape Layers (Advanced)', 'Color Grading', 'Audio-Reactive Basics', 'MOGRT / Templates',
+      'Plugins — Trapcode', 'Generative AI Tools', 'Render Optimization',
+    ];
+
+    function moduleOf(v) {
+      return (v.tags || []).find(t => t.includes(' ')) || 'General';
+    }
+
+    async function loadVideos() {
+      try {
+        const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
+        const videos = d.videos?.length ? d.videos : DUMMY;
+        renderVideos(videos);
+      } catch { renderVideos(DUMMY); }
+    }
+
+    function renderVideos(videos) {
+      const groups = new Map();
+      videos.forEach(v => {
+        const m = moduleOf(v);
+        if (!groups.has(m)) groups.set(m, []);
+        groups.get(m).push(v);
+      });
+      const orderedKeys = [
+        ...MODULE_ORDER.filter(m => groups.has(m)),
+        ...[...groups.keys()].filter(m => !MODULE_ORDER.includes(m)),
+      ];
+
+      const container = document.getElementById('video-groups');
+      container.innerHTML = '';
+      let rowIndex = 0;
+      orderedKeys.forEach(moduleName => {
+        const vids = groups.get(moduleName);
+        const groupEl = document.createElement('div');
+        groupEl.className = 'module-group';
+        groupEl.innerHTML = `<div class="module-heading"><h3>${escHtml(moduleName)}</h3><span class="module-count">${vids.length} VIDEO${vids.length===1?'':'S'}</span></div><div class="video-list"></div>`;
+        const listEl = groupEl.querySelector('.video-list');
+        vids.forEach(v => {
+          const row = buildRow(v, rowIndex);
+          listEl.appendChild(row);
+          const delay = 60 + rowIndex * 25;
+          setTimeout(() => row.classList.add('entered'), Math.min(delay, 900));
+          rowIndex++;
+        });
+        container.appendChild(groupEl);
+      });
+
+      document.getElementById('video-count-badge').textContent = `${videos.length} VIDEOS`;
+      document.getElementById('terminal-status').textContent = `// loaded ${videos.length} records — level: INTERMEDIATE`;
+      buildModuleFilters(orderedKeys);
+      setTimeout(updateProgress, 300);
+    }
+
+    function buildModuleFilters(moduleNames) {
+      const bar = document.getElementById('filter-bar');
+      bar.querySelectorAll('.filter-btn[data-module]').forEach(b => b.remove());
+      moduleNames.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.module = name;
+        btn.textContent = name.toUpperCase();
+        bar.appendChild(btn);
+      });
+      bar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const mod = btn.dataset.module;
+          document.querySelectorAll('.module-group').forEach(g => {
+            const heading = g.querySelector('h3').textContent;
+            g.style.display = (!mod || heading === mod) ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>

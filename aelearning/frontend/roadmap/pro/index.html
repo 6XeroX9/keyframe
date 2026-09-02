@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-level="pro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pro Path — AEPath</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/pages.css" />
+  <style>
+    .level-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,77,0,0.04) 0%, transparent 50%, rgba(255,77,0,0.12) 100%);
+      pointer-events: none;
+    }
+    /* Scanline extra intensity for pro */
+    .page-hero::after { opacity: 0.07; }
+
+    .level-badge-row {
+      display: flex; align-items: center; gap: 16px; margin-top: 24px; flex-wrap: wrap;
+    }
+    .lbadge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; border: 1px solid var(--accent); color: var(--accent);
+      border-radius: var(--card-radius);
+    }
+    .lbadge-gray { border-color: var(--border); color: var(--text-secondary); }
+    .lbadge-glow {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 12px rgba(255,77,0,0.3);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(255,77,0,0.3); }
+      50% { box-shadow: 0 0 20px rgba(255,77,0,0.6); }
+    }
+
+    .video-list-header {
+      display: grid;
+      grid-template-columns: 48px 100px 1fr auto auto auto auto;
+      gap: 16px;
+      padding: 8px 16px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .vlh-col {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+
+    /* Mastery panel */
+    .mastery-panel {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--card-radius); padding: 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .mastery-left { display: flex; flex-direction: column; gap: 12px; }
+    .mastery-title {
+      font-family: var(--font-display); font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+    .mastery-pips { display: flex; gap: 6px; }
+    .mastery-pip {
+      width: 32px; height: 4px; border-radius: 2px;
+      background: var(--border); transition: background 0.5s ease;
+    }
+    .mastery-pip.lit { background: var(--accent); }
+    .mastery-right {
+      text-align: right;
+    }
+    .mastery-big {
+      font-family: var(--font-display); font-size: 48px; color: var(--accent); line-height: 1;
+    }
+    .mastery-sub {
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-secondary); margin-top: 4px;
+    }
+
+    /* Technique pill on rows */
+    .vr-technique {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-secondary);
+      align-self: center; white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Hard badge */
+    .vr-hard {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 2px 8px;
+      border: 1px solid var(--accent); border-radius: 2px;
+      color: var(--accent); align-self: center; white-space: nowrap;
+    }
+
+    .video-row { opacity: 0; }
+    .video-row.entered { animation: row-enter 0.4s ease forwards; }
+
+    .module-group { margin-top: 36px; }
+    .module-group:first-child { margin-top: 0; }
+    .module-heading {
+      display: flex; align-items: baseline; gap: 10px;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+    .module-heading h3 {
+      font-family: var(--font-display); font-size: 16px; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--text-primary); font-weight: 400;
+    }
+    .module-heading .module-count {
+      font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-secondary);
+    }
+
+    @media (max-width: 680px) {
+      .video-list-header { grid-template-columns: 40px 72px 1fr auto; }
+      .video-list-header .vlh-col:nth-child(5),
+      .video-list-header .vlh-col:nth-child(6) { display: none; }
+      .video-row .vr-watch, .video-row .vr-yt { display: none; }
+      .mastery-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<script src="/transitions.js"></script>
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">AEPATH <span class="nav-logo-tag">[AE]</span></a>
+    <ul class="nav-links">
+      <li><a href="/roadmap" class="active">Roadmap</a></li>
+      <li><a href="/playlists">Playlists</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/courses">Courses</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions"></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="/playlists" class="mobile-nav-link">Playlists</a></li>
+      <li><a href="/creators" class="mobile-nav-link">Creators</a></li>
+      <li><a href="/courses" class="mobile-nav-link">Courses</a></li>
+    </ul>
+  </div>
+
+  <div class="page-hero">
+    <div class="level-hero-bg"></div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">HOME</a><span class="breadcrumb-sep">/</span>
+        <a href="/roadmap">ROADMAP</a><span class="breadcrumb-sep">/</span>
+        PRO
+      </div>
+
+      <!-- Terminal header — more verbose for pro -->
+      <div class="terminal-window" style="max-width:600px;margin-bottom:28px;">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot"></div><div class="terminal-dot"></div><div class="terminal-dot"></div>
+          <span class="terminal-titlebar-label">AEPath — pro_path.aep [UNLOCKED]</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-prompt">$</span><span class="t-cmd"> load --level=pro --mode=advanced --no-limits</span></div>
+          <div id="terminal-status" class="t-comment">// initializing...</div>
+          <div class="t-comment">// WARNING: high complexity content ahead</div>
+          <div class="t-comment">// recommended: complete INTERMEDIATE first</div>
+        </div>
+      </div>
+
+      <span class="section-number">03 / PRO</span>
+      <h1 class="page-title">GO<br>FURTHER.</h1>
+      <div class="level-badge-row">
+        <span class="lbadge lbadge-glow">PRO MODE</span>
+        <span class="lbadge lbadge-gray" id="video-count-badge">— VIDEOS</span>
+        <span class="lbadge lbadge-gray">EXPRESSIONS + C4D + COLOR</span>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding:64px 0 100px;">
+    <div class="container">
+
+      <!-- Mastery panel -->
+      <div class="mastery-panel">
+        <div class="mastery-left">
+          <span class="mastery-title">MASTERY LEVEL</span>
+          <div class="mastery-pips" id="mastery-pips">
+            <div class="mastery-pip"></div>
+            <div class="mastery-pip"></div>
+            <div class="mastery-pip"></div>
+            <div class="mastery-pip"></div>
+            <div class="mastery-pip"></div>
+          </div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:0.1em;"><span id="prog-done">0</span>/<span id="prog-total-caption">4</span> WATCHED · COMPLETE ALL 3 LEVELS TO REACH FULL MASTERY</span>
+        </div>
+        <div class="mastery-right">
+          <div class="mastery-big" id="prog-total">4</div>
+          <div class="mastery-sub">ADVANCED LESSONS</div>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filter-bar" id="filter-bar">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-tag="all">ALL</button>
+      </div>
+
+      <!-- Table header -->
+      <div class="video-list-header">
+        <span class="vlh-col">#</span>
+        <span class="vlh-col">PREVIEW</span>
+        <span class="vlh-col">TITLE</span>
+        <span class="vlh-col">DURATION</span>
+        <span class="vlh-col">STATUS</span>
+        <span class="vlh-col">YT</span>
+        <span class="vlh-col" style="text-align:right;">PLAY</span>
+      </div>
+
+      <!-- Videos, grouped by module -->
+      <div id="video-groups"></div>
+    </div>
+  </section>
+
+  <!-- Level nav -->
+  <div style="background:var(--bg-secondary);border-top:1px solid var(--border);padding:40px 0;">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <a href="/roadmap/intermediate" class="btn" style="font-size:11px;padding:12px 24px;border:1px solid var(--border);color:var(--text-secondary);">
+        ← BACK: INTERMEDIATE
+      </a>
+      <div style="font-family:var(--font-display);font-size:13px;letter-spacing:0.1em;color:var(--accent);">PATH COMPLETE. YOU'RE A PRO.</div>
+      <a href="/courses" class="btn btn-accent" style="font-size:11px;padding:12px 24px;">
+        EXPLORE COURSES →
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div style="border-top:1px solid var(--border);padding:20px 40px;max-width:1280px;margin:0 auto;">
+      <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">© 2025 AEPATH &nbsp;·&nbsp; MADE BY <a href="https://arsynfx.social/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">ARSYNFX</a></p>
+    </div>
+  </footer>
+
+  <script src="/shared.js"></script>
+  <script src="/progress.js"></script>
+  <script>
+    const LEVEL = 'advanced';
+    const DUMMY = [
+      { id:'p1', title:'Custom Expression Rigs',          creators:{name:'Motion Bro'}, duration:'34:20', youtube_id:'v7by6RLTO_4', tags:['expressions'], technique:'WIGGLE / LOOP' },
+      { id:'p2', title:'C4D Lite + AE Workflow',          creators:{name:'School of Motion'}, duration:'41:00', youtube_id:'HBq_pUJWd7s', tags:['c4d'], technique:'3D PIPELINE' },
+      { id:'p3', title:'Color Science & Grading in AE',   creators:{name:'Cullen Kelly'}, duration:'28:45', youtube_id:'rAVxSCF7gvw', tags:['color'], technique:'LUMETRI / LUT' },
+      { id:'p4', title:'Optical Flares & Real Lens FX',   creators:{name:'Video Copilot'}, duration:'22:30', youtube_id:'Os-oFj4XURM', tags:['optical'], technique:'OPTICAL FX' },
+    ];
+
+    function buildRow(v, idx) {
+      const div = document.createElement('div');
+      div.className = 'video-row';
+      div.dataset.tags = (v.tags||[]).join(',');
+      div.dataset.id = v.id;
+      const thumb = v.youtube_id
+        ? `<img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+        : `<div class="vr-thumb-placeholder">▶</div>`;
+      div.innerHTML = `
+        <div class="vr-num">${String(idx+1).padStart(3,'0')}</div>
+        <div class="vr-thumb">${thumb}</div>
+        <div class="vr-info">
+          <div class="vr-title">${escHtml(v.title)}</div>
+          <div class="vr-creator">${escHtml(v.creators?.name||'')}</div>
+        </div>
+        <div class="vr-duration">[${escHtml(v.duration||'')}]</div>
+        <button type="button" class="vr-watch wt-btn"></button>
+        <a href="${escHtml(v.youtube_url || (v.youtube_id ? `https://www.youtube.com/watch?v=${v.youtube_id}` : '#'))}" target="_blank" rel="noopener" class="vr-yt wt-btn" title="Open on YouTube">YT ↗</a>
+        <div class="vr-play">PLAY ▶</div>`;
+
+      div.querySelector('.vr-yt').addEventListener('click', e => e.stopPropagation());
+
+      const watchBtn = div.querySelector('.vr-watch');
+      const syncWatchBtn = () => {
+        const watched = AEProgress.isWatched(v.id);
+        watchBtn.classList.toggle('active', watched);
+        watchBtn.textContent = watched ? '✓ Watched' : 'Mark Watched';
+      };
+      syncWatchBtn();
+      watchBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        AEProgress.toggleWatched(v.id);
+        syncWatchBtn();
+        updateProgress();
+      });
+
+      div.addEventListener('click', () => openModal(v));
+      return div;
+    }
+
+    function updateProgress() {
+      const ids = [...document.querySelectorAll('.video-row')].map(r => r.dataset.id);
+      const total = ids.length;
+      const watched = AEProgress.watchedCount(ids);
+      document.getElementById('prog-done').textContent = watched;
+      document.getElementById('prog-total-caption').textContent = total;
+      const ratio = total ? watched / total : 0;
+      document.querySelectorAll('.mastery-pip').forEach((p, i) => {
+        p.classList.toggle('lit', i < Math.round(ratio * 5));
+      });
+    }
+
+    const MODULE_ORDER = [
+      'Deep Expressions & Scripting', 'Element 3D / Cinema 4D', 'Blender ↔ AE Pipeline',
+      'Audio-Reactive Visualizers', 'Flow Edits', 'Twixtor & Retiming', 'RSMB / Motion Blur',
+      'Advanced Camera Tracking', 'Deep Compositing', 'Character Rigging',
+    ];
+
+    function moduleOf(v) {
+      return (v.tags || []).find(t => t.includes(' ')) || 'General';
+    }
+
+    async function loadVideos() {
+      try {
+        const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
+        const videos = d.videos?.length ? d.videos : DUMMY;
+        renderVideos(videos);
+      } catch { renderVideos(DUMMY); }
+    }
+
+    function renderVideos(videos) {
+      const groups = new Map();
+      videos.forEach(v => {
+        const m = moduleOf(v);
+        if (!groups.has(m)) groups.set(m, []);
+        groups.get(m).push(v);
+      });
+      const orderedKeys = [
+        ...MODULE_ORDER.filter(m => groups.has(m)),
+        ...[...groups.keys()].filter(m => !MODULE_ORDER.includes(m)),
+      ];
+
+      const container = document.getElementById('video-groups');
+      container.innerHTML = '';
+      let rowIndex = 0;
+      orderedKeys.forEach(moduleName => {
+        const vids = groups.get(moduleName);
+        const groupEl = document.createElement('div');
+        groupEl.className = 'module-group';
+        groupEl.innerHTML = `<div class="module-heading"><h3>${escHtml(moduleName)}</h3><span class="module-count">${vids.length} VIDEO${vids.length===1?'':'S'}</span></div><div class="video-list"></div>`;
+        const listEl = groupEl.querySelector('.video-list');
+        vids.forEach(v => {
+          const row = buildRow(v, rowIndex);
+          listEl.appendChild(row);
+          const delay = 80 + rowIndex * 25;
+          setTimeout(() => row.classList.add('entered'), Math.min(delay, 900));
+          rowIndex++;
+        });
+        container.appendChild(groupEl);
+      });
+
+      document.getElementById('video-count-badge').textContent = `${videos.length} VIDEOS`;
+      document.getElementById('prog-total').textContent = videos.length;
+      document.getElementById('terminal-status').textContent = `// loaded ${videos.length} records — level: PRO — status: UNLOCKED`;
+      buildModuleFilters(orderedKeys);
+      setTimeout(updateProgress, 300);
+    }
+
+    function buildModuleFilters(moduleNames) {
+      const bar = document.getElementById('filter-bar');
+      bar.querySelectorAll('.filter-btn[data-module]').forEach(b => b.remove());
+      moduleNames.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.module = name;
+        btn.textContent = name.toUpperCase();
+        bar.appendChild(btn);
+      });
+      bar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const mod = btn.dataset.module;
+          document.querySelectorAll('.module-group').forEach(g => {
+            const heading = g.querySelector('h3').textContent;
+            g.style.display = (!mod || heading === mod) ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>

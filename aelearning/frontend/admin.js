@@ -888,7 +888,7 @@ async function loadSettingsPanel() {
   try {
     const data = await apiFetch('/settings');
     const s = data.settings || {};
-    document.getElementById('setting-site-title').value = s.site_title || 'AEPath';
+    document.getElementById('setting-site-title').value = s.site_title || 'Keyframe';
     document.getElementById('setting-tagline').value    = s.tagline || '';
     const accent = s.accent_color || '#FF4D00';
     document.getElementById('setting-accent').value = accent;
@@ -906,6 +906,11 @@ async function loadSettingsPanel() {
     document.getElementById('setting-about-m3').value     = s.about_m3     || '';
     // Kit
     document.getElementById('setting-kit-form-id').value  = s.kit_form_id  || '';
+    // Homepage section visibility — checked (visible) unless explicitly set to 'false'
+    ['roadmap','playlists','creators','about','courses','faq'].forEach(id => {
+      const el = document.getElementById(`setting-section-${id}`);
+      if (el) el.checked = s[`section_${id}_visible`] !== 'false';
+    });
   } catch { toast('Could not load settings', 'error'); }
 }
 
@@ -925,6 +930,10 @@ document.getElementById('settings-save-btn').addEventListener('click', async () 
     about_m3:     document.getElementById('setting-about-m3').value.trim(),
     kit_form_id:  document.getElementById('setting-kit-form-id').value.trim(),
   };
+  ['roadmap','playlists','creators','about','courses','faq'].forEach(id => {
+    const el = document.getElementById(`setting-section-${id}`);
+    if (el) settings[`section_${id}_visible`] = el.checked ? 'true' : 'false';
+  });
   try {
     await apiFetch('/admin/settings', { method: 'POST', body: JSON.stringify(settings) });
     toast('Settings saved');

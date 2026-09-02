@@ -302,8 +302,12 @@ function buildPlaylistCard(pl, index) {
   div.className = 'playlist-card specimen-frame';
   const creator = pl.creators?.name || pl.user?.username || 'Community';
   const count = pl.video_count ?? (Array.isArray(pl.video_ids) ? pl.video_ids.length : 0);
+  const thumb = pl.youtube_id
+    ? `<img class="playlist-thumb-img" src="https://img.youtube.com/vi/${pl.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
+    : '';
   div.innerHTML = `
     <div class="playlist-top">
+      ${thumb}
       <span class="playlist-number">${String(index + 1).padStart(2, '0')}</span>
     </div>
     <div class="playlist-body">
@@ -314,7 +318,7 @@ function buildPlaylistCard(pl, index) {
         ${pl.featured ? '<span class="tag tag-accent">FEATURED</span>' : ''}
       </div>
       <div class="playlist-foot">
-        <a href="#" class="playlist-link">VIEW PLAYLIST →</a>
+        <a href="/playlists/view?id=${pl.id}" class="playlist-link">VIEW PLAYLIST →</a>
         <button type="button" class="wt-btn save-btn"></button>
       </div>
     </div>
@@ -332,6 +336,8 @@ function buildPlaylistCard(pl, index) {
     AEProgress.toggleSaved('playlist', pl.id);
     syncSaveBtn();
   });
+  div.querySelector('.playlist-link').addEventListener('click', e => e.stopPropagation());
+  div.addEventListener('click', () => { window.location = `/playlists/view?id=${pl.id}`; });
 
   return div;
 }
@@ -671,6 +677,17 @@ async function loadSettings() {
     if (s.about_m1) { const el = document.getElementById('about-m1'); if (el) el.innerHTML = escHtml(s.about_m1).replace(/\n/g, '<br>'); }
     if (s.about_m2) { const el = document.getElementById('about-m2'); if (el) el.innerHTML = escHtml(s.about_m2).replace(/\n/g, '<br>'); }
     if (s.about_m3) { const el = document.getElementById('about-m3'); if (el) el.innerHTML = escHtml(s.about_m3).replace(/\n/g, '<br>'); }
+
+    // Section visibility — admin-controlled show/hide per homepage section.
+    // querySelectorAll (not getElementById) so this stays correct even if a
+    // section id is accidentally duplicated in the markup.
+    const TOGGLEABLE_SECTIONS = ['roadmap', 'playlists', 'creators', 'about', 'courses', 'faq'];
+    TOGGLEABLE_SECTIONS.forEach(id => {
+      const hidden = s[`section_${id}_visible`] === 'false';
+      document.querySelectorAll(`section#${id}`).forEach(el => {
+        el.style.display = hidden ? 'none' : '';
+      });
+    });
   } catch { /* ignore */ }
 }
 

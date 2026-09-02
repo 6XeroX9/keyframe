@@ -293,10 +293,12 @@
       const featured = playlists.find(p => p.featured || p.is_featured);
       if (featured) buildFeatured(featured);
 
+      // Show every playlist in the grid, including the featured one — a playlist
+      // being "featured" just means it also gets the hero spot, not that it should
+      // disappear from the full list below.
       const grid = document.getElementById('pl-grid');
-      const nonFeatured = playlists.filter(p => !(p.featured || p.is_featured));
-      nonFeatured.forEach(pl => grid.appendChild(buildCard(pl)));
-      document.getElementById('pl-count').textContent = `${nonFeatured.length} COLLECTIONS`;
+      playlists.forEach(pl => grid.appendChild(buildCard(pl)));
+      document.getElementById('pl-count').textContent = `${playlists.length} COLLECTIONS`;
 
       setTimeout(() => {
         document.querySelectorAll('.reveal').forEach((el, i) => {

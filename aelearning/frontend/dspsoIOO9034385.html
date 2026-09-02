@@ -1,202 +1,202 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyframe Admin</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<script src="/transitions.js"></script>
+
+  <!-- ─── SIDEBAR ─────────────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-text">KEYFRAME</span>
+      <span class="sidebar-logo-sub">Admin Panel</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-item active" data-panel="dashboard">
+        <span class="sidebar-nav-bracket">[01]</span>
+        <span class="sidebar-nav-label">Dashboard</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="videos">
+        <span class="sidebar-nav-bracket">[02]</span>
+        <span class="sidebar-nav-label">Videos</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="playlists">
+        <span class="sidebar-nav-bracket">[03]</span>
+        <span class="sidebar-nav-label">Playlists</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="creators">
+        <span class="sidebar-nav-bracket">[04]</span>
+        <span class="sidebar-nav-label">Creators</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="users">
+        <span class="sidebar-nav-bracket">[05]</span>
+        <span class="sidebar-nav-label">Users</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="courses">
+        <span class="sidebar-nav-bracket">[06]</span>
+        <span class="sidebar-nav-label">Courses</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="settings">
+        <span class="sidebar-nav-bracket">[07]</span>
+        <span class="sidebar-nav-label">Settings</span>
+      </div>
+      <div class="sidebar-nav-item" data-panel="data">
+        <span class="sidebar-nav-bracket">[08]</span>
+        <span class="sidebar-nav-label">Backup / Restore</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="sidebar-back">← Back to Site</a>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ──────────────────────────────────────────────────────────── -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="admin-topbar-title" id="topbar-title">DASHBOARD</div>
+      <div class="admin-user-info">
+        <span id="admin-username">—</span>
+        <span class="admin-user-badge">ADMIN</span>
+      </div>
+    </div>
+
+    <!-- DASHBOARD PANEL -->
+    <div class="admin-panel active" id="panel-dashboard">
+      <div class="stat-cards" id="dash-stat-cards">
+        <div class="stat-card">
+          <span class="stat-card-number" id="stat-videos">—</span>
+          <span class="stat-card-label">Total Videos</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card-number" id="stat-users">—</span>
+          <span class="stat-card-label">Total Users</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card-number" id="stat-playlists">—</span>
+          <span class="stat-card-label">Total Playlists</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card-number" id="stat-creators">—</span>
+          <span class="stat-card-label">Total Creators</span>
+        </div>
+      </div>
+
+      <div class="bar-chart-wrap">
+        <div class="bar-chart-title">WEEKLY SIGNUPS</div>
+        <div class="bar-chart" id="weekly-chart"></div>
+      </div>
+
+      <div class="activity-feed">
+        <div class="activity-title">RECENT ACTIVITY</div>
+        <div id="activity-list">
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <span>Loading activity...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEOS PANEL -->
+    <div class="admin-panel" id="panel-videos">
+      <div class="panel-header">
+        <h2 class="panel-title">VIDEOS</h2>
+        <button class="btn-add" id="videos-add-btn">+ ADD VIDEO</button>
+      </div>
+
+      <div class="inline-form" id="videos-form">
+        <div class="form-title" id="videos-form-title">ADD VIDEO</div>
+        <input type="hidden" id="video-edit-id" />
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Title</label>
+            <input type="text" id="video-title" placeholder="After Effects Basics..." />
+          </div>
+          <div class="form-field">
+            <label>YouTube URL</label>
+            <input type="text" id="video-youtube-url" placeholder="https://youtube.com/watch?v=..." />
+          </div>
+          <div class="form-field">
+            <label>Level</label>
+            <select id="video-level">
+              <option value="">Select level</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Pro</option>
+              <option value="misc">Misc</option>
+              <option value="playlist">Playlist-only</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Creator</label>
+            <select id="video-creator"></select>
+          </div>
+          <div class="form-field">
+            <label>Duration</label>
+            <input type="text" id="video-duration" placeholder="12:30" />
+          </div>
+          <div class="form-field">
+            <label>Tags (comma separated)</label>
+            <input type="text" id="video-tags" placeholder="expressions, wiggle, intro" />
+          </div>
+          <div class="form-field full">
+            <label>Description</label>
+            <textarea id="video-description" placeholder="Brief description..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="video-save-btn">SAVE VIDEO</button>
+          <button class="btn-cancel" id="videos-form-cancel">CANCEL</button>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="videos-search" placeholder="Search videos..." />
+      </div>
+
+      <div class="admin-tabs" id="videos-level-tabs">
+        <button class="admin-tab active" data-level="beginner">BEGINNER</button>
+        <button class="admin-tab" data-level="intermediate">INTERMEDIATE</button>
+        <button class="admin-tab" data-level="advanced">PRO</button>
+        <button class="admin-tab" data-level="misc">MISC</button>
+        <button class="admin-tab" data-level="playlist">PLAYLIST-ONLY</button>
+      </div>
+      <div class="admin-tabs-hint">Drag rows to reorder — the order here is exactly what visitors see on the roadmap page.</div>
+
+      <div class="video-list" id="videos-list"></div>
+    </div>
+
+    <!-- PLAYLISTS PANEL -->
+    <div class="admin-panel" id="panel-playlists">
+      <div class="panel-header">
+        <h2 class="panel-title">PLAYLISTS</h2>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-add" id="playlists-import-btn">↓ IMPORT FROM YOUTUBE</button>
+          <button class="btn-add" id="playlists-add-btn">+ CREATE PLAYLIST</button>
+        </div>
+      </div>
+
+      <div class="inline-form" id="playlists-import-form">
+        <div class="form-title">IMPORT YOUTUBE PLAYLIST</div>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>YouTube Playlist URL</label>
+            <input type="text" id="playlist-import-url" placeholder="https://www.youtube.com/playlist?list=..." />
+          </div>
+          <div class="form-field full">
+            <label>Playlist Name (optional — defaults to the YouTube title)</label>
+            <input type="text" id="playlist-import-name" placeholder="Leave blank to use the YouTube title" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="playlist-import-run-btn">IMPORT PLAYLIST</button>
+          <button class="btn-cancel" id="playlists-import-cancel">CANCEL</button>
         </div>
         <div id="playlist-import-status" style="margin-top:12px;font-size:12px;color:var(--text-secondary);white-space:pre-wrap;"></div>
       </div>
@@ -228,6 +228,20 @@
         </div>
       </div>
 
+      <div class="inline-form" id="playlist-videos-manager">
+        <div class="form-title">MANAGE VIDEOS — <span id="pvm-playlist-name"></span></div>
+        <input type="hidden" id="pvm-playlist-id" />
+        <div class="search-bar">
+          <input type="text" id="pvm-search" placeholder="Search videos to add..." />
+        </div>
+        <div id="pvm-search-results" class="video-list" style="display:none;margin-bottom:16px;"></div>
+        <div class="admin-tabs-hint">Drag to reorder — this is the exact order visitors see on the playlist page.</div>
+        <div class="video-list" id="pvm-list"></div>
+        <div class="form-actions" style="margin-top:16px;">
+          <button class="btn-cancel" id="pvm-close-btn">CLOSE</button>
+        </div>
+      </div>
+
       <div class="table-wrap">
         <table>
           <thead>
@@ -252,3 +266,292 @@
       </div>
 
       <div class="inline-form" id="creators-form">
+        <div class="form-title" id="creators-form-title">ADD CREATOR</div>
+        <input type="hidden" id="creator-edit-id" />
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Name</label>
+            <input type="text" id="creator-name" placeholder="Evan Abrams" />
+          </div>
+          <div class="form-field">
+            <label>Specialty</label>
+            <input type="text" id="creator-specialty" placeholder="Motion Design" />
+          </div>
+          <div class="form-field">
+            <label>YouTube URL</label>
+            <input type="text" id="creator-youtube-url" placeholder="https://youtube.com/@..." />
+          </div>
+          <div class="form-field">
+            <label>Handle</label>
+            <input type="text" id="creator-handle" placeholder="@evabrams" />
+          </div>
+          <div class="form-field">
+            <label>Subscriber Count</label>
+            <input type="text" id="creator-subs" placeholder="245K" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="creator-save-btn">SAVE CREATOR</button>
+          <button class="btn-cancel" id="creators-form-cancel">CANCEL</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Specialty</th>
+              <th>Handle</th>
+              <th>Subscribers</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="creators-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- USERS PANEL -->
+    <div class="admin-panel" id="panel-users">
+      <div class="panel-header">
+        <h2 class="panel-title">USERS</h2>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="users-search" placeholder="Search by email or username..." />
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- COURSES PANEL -->
+    <div class="admin-panel" id="panel-courses">
+      <div class="panel-header">
+        <h2 class="panel-title">COURSES</h2>
+        <button class="btn-add" id="courses-add-btn">+ ADD COURSE</button>
+      </div>
+
+      <div class="inline-form" id="courses-form">
+        <div class="form-title" id="courses-form-title">ADD COURSE</div>
+        <input type="hidden" id="course-edit-id" />
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Title</label>
+            <input type="text" id="course-title" placeholder="Motion Design Masterclass" />
+          </div>
+          <div class="form-field">
+            <label>Educator</label>
+            <input type="text" id="course-educator" placeholder="Motion Array" />
+          </div>
+          <div class="form-field">
+            <label>Price</label>
+            <input type="text" id="course-price" placeholder="$97" />
+          </div>
+          <div class="form-field">
+            <label>Affiliate URL</label>
+            <input type="text" id="course-affiliate-url" placeholder="https://..." />
+          </div>
+          <div class="form-field">
+            <label>Thumbnail URL</label>
+            <input type="text" id="course-thumbnail" placeholder="https://..." />
+          </div>
+          <div class="form-field">
+            <label>Active</label>
+            <input type="checkbox" class="toggle" id="course-active" checked />
+          </div>
+          <div class="form-field full">
+            <label>Description</label>
+            <textarea id="course-description" placeholder="Course description..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="course-save-btn">SAVE COURSE</button>
+          <button class="btn-cancel" id="courses-form-cancel">CANCEL</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Educator</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="courses-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="admin-panel" id="panel-settings">
+      <div class="panel-header">
+        <h2 class="panel-title">SETTINGS</h2>
+        <button class="btn-save" id="settings-save-btn">SAVE SETTINGS</button>
+      </div>
+
+      <div class="settings-form">
+        <div class="settings-group">
+          <div class="settings-section-title">SITE IDENTITY</div>
+          <div class="settings-field">
+            <label>Site Title</label>
+            <input type="text" id="setting-site-title" placeholder="Keyframe" />
+          </div>
+          <div class="settings-field">
+            <label>Tagline</label>
+            <input type="text" id="setting-tagline" placeholder="Free After Effects Learning" />
+          </div>
+          <div class="settings-field">
+            <label>Accent Color</label>
+            <input type="color" id="setting-accent" value="#FF4D00" />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">HERO</div>
+          <div class="settings-field">
+            <label>Hero Headline Line 1</label>
+            <input type="text" id="setting-hero-line1" placeholder="MASTER" />
+          </div>
+          <div class="settings-field">
+            <label>Hero Headline Line 2</label>
+            <input type="text" id="setting-hero-line2" placeholder="AFTER EFFECTS." />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">CONTENT</div>
+          <div class="settings-field">
+            <label>Marquee Text</label>
+            <input type="text" id="setting-marquee" placeholder="MOTION GRAPHICS · EXPRESSIONS · ..." />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">ABOUT SECTION</div>
+          <div class="settings-field">
+            <label>Section Title (use \n for line break)</label>
+            <input type="text" id="setting-about-title" placeholder="WHY WE\nBUILT THIS." />
+          </div>
+          <div class="settings-field">
+            <label>Body Paragraph 1</label>
+            <textarea id="setting-about-body" rows="3" placeholder="Keyframe was born from frustration..."></textarea>
+          </div>
+          <div class="settings-field">
+            <label>Body Paragraph 2</label>
+            <textarea id="setting-about-body2" rows="2" placeholder="No ads. No paywalls..."></textarea>
+          </div>
+          <div class="settings-field">
+            <label>Manifesto Point 1</label>
+            <input type="text" id="setting-about-m1" placeholder="FREE FOR EVERY&#10;EDITOR ON EARTH" />
+          </div>
+          <div class="settings-field">
+            <label>Manifesto Point 2</label>
+            <input type="text" id="setting-about-m2" placeholder="CURATED NOT&#10;ALGORITHM-DRIVEN" />
+          </div>
+          <div class="settings-field">
+            <label>Manifesto Point 3</label>
+            <input type="text" id="setting-about-m3" placeholder="BUILT BY EDITORS&#10;FOR EDITORS" />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">HOMEPAGE SECTIONS</div>
+          <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;line-height:1.6;">Toggle any section off to hide it from the homepage. The hero banner at the very top can't be hidden this way.</p>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">Roadmap ("Your Path to Pro")</label>
+            <input type="checkbox" class="toggle" id="setting-section-roadmap" checked />
+          </div>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">Playlists ("Community Picks")</label>
+            <input type="checkbox" class="toggle" id="setting-section-playlists" checked />
+          </div>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">Creators ("Learn from the Best")</label>
+            <input type="checkbox" class="toggle" id="setting-section-creators" checked />
+          </div>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">About</label>
+            <input type="checkbox" class="toggle" id="setting-section-about" checked />
+          </div>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">Courses</label>
+            <input type="checkbox" class="toggle" id="setting-section-courses" checked />
+          </div>
+          <div class="settings-field" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <label style="margin:0;">FAQ</label>
+            <input type="checkbox" class="toggle" id="setting-section-faq" checked />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">NEWSLETTER (KIT)</div>
+          <div class="settings-field">
+            <label>Kit Form ID</label>
+            <input type="text" id="setting-kit-form-id" placeholder="1234567" />
+            <small style="color:var(--text-secondary);font-size:11px;margin-top:4px;display:block;">Find this in your Kit form embed URL: app.kit.com/forms/<strong>FORM_ID</strong>/subscriptions</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKUP / RESTORE PANEL -->
+    <div class="admin-panel" id="panel-data">
+      <div class="panel-header">
+        <h2 class="panel-title">BACKUP / RESTORE</h2>
+      </div>
+
+      <div class="settings-form">
+        <div class="settings-group">
+          <div class="settings-section-title">EXPORT BACKUP</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">Download a complete JSON backup of all your site data — videos, creators, playlists, courses, and settings.</p>
+          <button class="btn-save" id="backup-export-btn">⬇ DOWNLOAD BACKUP JSON</button>
+          <div id="backup-status" style="margin-top:12px;font-size:12px;color:var(--text-secondary);"></div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">RESTORE FROM BACKUP</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;line-height:1.6;">Upload a previously exported JSON file to restore data. This will <strong style="color:var(--accent);">upsert</strong> existing records — it won't delete data not in the backup.</p>
+          <div style="border:1px dashed var(--border);border-radius:var(--card-radius);padding:24px;text-align:center;background:var(--bg-secondary);margin-bottom:16px;" id="restore-drop-zone">
+            <input type="file" id="restore-file" accept=".json" style="display:none;" />
+            <div style="font-family:var(--font-display);font-size:13px;letter-spacing:0.1em;color:var(--text-secondary);margin-bottom:12px;">DROP JSON FILE HERE OR CLICK TO SELECT</div>
+            <button class="btn-add" onclick="document.getElementById('restore-file').click()">SELECT FILE</button>
+            <div id="restore-filename" style="margin-top:10px;font-size:12px;color:var(--accent);"></div>
+          </div>
+          <button class="btn-save" id="restore-btn" disabled>↑ RESTORE FROM FILE</button>
+          <div id="restore-status" style="margin-top:12px;font-size:12px;color:var(--text-secondary);white-space:pre-wrap;"></div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-section-title">SUPABASE SQL EDITOR</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">For advanced operations, run SQL directly in the Supabase dashboard.</p>
+          <a href="https://supabase.com/dashboard" target="_blank" rel="noopener" class="btn-save" style="display:inline-block;text-decoration:none;text-align:center;">OPEN SUPABASE DASHBOARD ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

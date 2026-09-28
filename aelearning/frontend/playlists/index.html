@@ -223,18 +223,11 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script>
-    const DUMMY_PLAYLISTS = [
-      { id:'pl1', title:'Motion Principles',   creator:'School of Motion', video_count:8,  total_duration:'2h 20m', tags:['animation'], youtube_id:'9KKhfXJo-zg', featured:true,
-        description:'The eight essential principles of motion design — from anticipation to follow-through. Build your instinct for great movement.' },
-      { id:'pl2', title:'Expression Toolkit',  creator:'Mt. Mograph',      video_count:6,  total_duration:'1h 45m', tags:['expressions'], youtube_id:'HBq_pUJWd7s', featured:false },
-      { id:'pl3', title:'3D Compositing',      creator:'Evan Abrams',       video_count:5,  total_duration:'1h 30m', tags:['3d'], youtube_id:'UeJeq4PBXLA', featured:false },
-      { id:'pl4', title:'Speed Workflow',      creator:'Jake In Motion',    video_count:7,  total_duration:'1h 10m', tags:['workflow'], youtube_id:'v7by6RLTO_4', featured:false },
-      { id:'pl5', title:'Text Animations',     creator:'Ukramedia',         video_count:9,  total_duration:'2h 05m', tags:['animation'], youtube_id:'Os-oFj4XURM', featured:false },
-      { id:'pl6', title:'Liquid Motion',       creator:'Motion Bro',        video_count:4,  total_duration:'58m',    tags:['animation'], youtube_id:'rAVxSCF7gvw', featured:false },
-    ];
 
     function buildFeatured(pl) {
       const thumb = pl.youtube_id
@@ -285,10 +278,10 @@
     }
 
     async function loadPlaylists() {
-      let playlists = DUMMY_PLAYLISTS;
+      let playlists = [];
       try {
-        const d = await apiFetch('/playlists?limit=20');
-        if (d.playlists?.length) playlists = d.playlists;
+        const d = await apiFetch('/playlists');
+        playlists = d.playlists || [];
       } catch {}
 
       const featured = playlists.find(p => p.featured || p.is_featured);
@@ -298,6 +291,7 @@
       // being "featured" just means it also gets the hero spot, not that it should
       // disappear from the full list below.
       const grid = document.getElementById('pl-grid');
+      if (!playlists.length) grid.textContent = 'No playlists have been published yet.';
       playlists.forEach(pl => grid.appendChild(buildCard(pl)));
       document.getElementById('pl-count').textContent = `${playlists.length} COLLECTIONS`;
 

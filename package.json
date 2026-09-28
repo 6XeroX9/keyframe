@@ -1,0 +1,10 @@
+{
+  "name": "keyframe-static-site",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build-static.cjs",
+    "test": "node --test tests/*.test.cjs"
+  }
+}

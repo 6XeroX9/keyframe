@@ -180,18 +180,14 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script src="/progress.js"></script>
   <script>
     const LEVEL = 'beginner';
     const LEVEL_LABEL = 'BEGINNER';
-    const DUMMY = [
-      { id:'d1', title:'After Effects Basics in 30 Minutes', creators:{name:'Evan Abrams'}, duration:'30:12', youtube_id:'dHR3tFiCLU4', tags:['basics','intro'] },
-      { id:'d2', title:'Understanding Keyframes & Easing',   creators:{name:'Jake In Motion'}, duration:'18:45', youtube_id:'v7by6RLTO_4', tags:['keyframes','animation'] },
-      { id:'d3', title:'Motion Blur Deep Dive',              creators:{name:'Motion Bro'}, duration:'12:30', youtube_id:'rAVxSCF7gvw', tags:['basics'] },
-      { id:'d4', title:'Text Animation Fundamentals',        creators:{name:'Ukramedia'}, duration:'22:10', youtube_id:'Os-oFj4XURM', tags:['animation','text'] },
-    ];
 
     function buildRow(v, idx) {
       const div = document.createElement('div');
@@ -254,9 +250,9 @@
     async function loadVideos() {
       try {
         const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
-        const videos = d.videos?.length ? d.videos : DUMMY;
+        const videos = d.videos || [];
         renderVideos(videos);
-      } catch { renderVideos(DUMMY); }
+      } catch { renderVideos([]); }
     }
 
     function renderVideos(videos) {

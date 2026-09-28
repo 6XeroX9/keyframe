@@ -234,75 +234,11 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script>
-    const DUMMY_COURSES = [
-      {
-        id:'co1', title:'After Effects for Beginners',
-        instructor:'School of Motion', platform:'YOUTUBE',
-        level:'beginner', price:'free',
-        lessons:12, duration:'4h 30m',
-        desc:'The complete beginner guide — interface, layers, keyframes, and your first real animation. No experience required.',
-        youtube_id:'9KKhfXJo-zg', url:'#', locked:false
-      },
-      {
-        id:'co2', title:'Motion Design Bootcamp',
-        instructor:'School of Motion', platform:'SCHOOLOFMOTION',
-        level:'intermediate', price:'paid',
-        lessons:40, duration:'20h',
-        desc:'Industry-standard motion design skills. Principles, theory, and software — the definitive paid course.',
-        youtube_id:'HBq_pUJWd7s', url:'#', locked:false
-      },
-      {
-        id:'co3', title:'Expressions 101',
-        instructor:'Mt. Mograph', platform:'YOUTUBE',
-        level:'intermediate', price:'free',
-        lessons:8, duration:'3h 15m',
-        desc:'Unlock the power of expressions. Wiggle, loop, link properties, and start writing your own.',
-        youtube_id:'v7by6RLTO_4', url:'#', locked:false
-      },
-      {
-        id:'co4', title:'VFX Compositing Fundamentals',
-        instructor:'Video Copilot', platform:'YOUTUBE',
-        level:'intermediate', price:'free',
-        lessons:10, duration:'5h',
-        desc:'Track footage, composite elements, and build realistic VFX shots step by step.',
-        youtube_id:'rAVxSCF7gvw', url:'#', locked:false
-      },
-      {
-        id:'co5', title:'Advanced Expression Rigging',
-        instructor:'Mt. Mograph', platform:'YOUTUBE',
-        level:'pro', price:'free',
-        lessons:6, duration:'2h 45m',
-        desc:'Build complex character and UI rigs with expressions. Sliders, controllers, and modular systems.',
-        youtube_id:'Os-oFj4XURM', url:'#', locked:false
-      },
-      {
-        id:'co6', title:'Color Grading in After Effects',
-        instructor:'Cullen Kelly', platform:'YOUTUBE',
-        level:'pro', price:'free',
-        lessons:7, duration:'3h 10m',
-        desc:'Color science, Lumetri, LUTs, and finishing your motion work to a broadcast standard.',
-        youtube_id:'UeJeq4PBXLA', url:'#', locked:false
-      },
-      {
-        id:'co7', title:'Cinema 4D Lite + AE Pipeline',
-        instructor:'School of Motion', platform:'SCHOOLOFMOTION',
-        level:'pro', price:'paid',
-        lessons:20, duration:'10h',
-        desc:'The full 3D workflow inside After Effects — modelling basics, lighting, and compositing C4D renders.',
-        youtube_id:'dHR3tFiCLU4', url:'#', locked:true
-      },
-      {
-        id:'co8', title:'UI & App Animation',
-        instructor:'Jake In Motion', platform:'YOUTUBE',
-        level:'beginner', price:'free',
-        lessons:9, duration:'2h 50m',
-        desc:'Prototype and animate UI screens. Ideal for product designers learning motion.',
-        youtube_id:'wX0V3qCMcnk', url:'#', locked:false
-      },
-    ];
 
     const stripeMap = { beginner:'stripe-beginner', intermediate:'stripe-intermediate', pro:'stripe-pro' };
 
@@ -312,7 +248,9 @@
       div.dataset.level = c.level || '';
       div.dataset.price = c.price || 'free';
 
-      const thumb = c.youtube_id
+      const thumb = c.thumbnail_url
+        ? `<img src="${escHtml(c.thumbnail_url)}" alt="" loading="lazy">`
+        : c.youtube_id
         ? `<img src="https://img.youtube.com/vi/${c.youtube_id}/mqdefault.jpg" alt="" loading="lazy">`
         : `<div class="cc-thumb-placeholder">▶</div>`;
       const badgeClass = c.price === 'paid' ? 'badge-paid' : 'badge-free';
@@ -346,13 +284,14 @@
     }
 
     async function loadCourses() {
-      let courses = DUMMY_COURSES;
+      let courses = [];
       try {
         const d = await apiFetch('/courses?limit=20');
-        if (d.courses?.length) courses = d.courses;
+        courses = d.courses || [];
       } catch {}
 
       const grid = document.getElementById('courses-grid');
+      if (!courses.length) grid.textContent = 'No courses have been published yet.';
       courses.forEach(c => grid.appendChild(buildCard(c)));
 
       const free = courses.filter(c => c.price === 'free').length;

@@ -193,6 +193,8 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script>
@@ -203,7 +205,7 @@
         let total = 0;
         for (let i = 0; i < levels.length; i++) {
           const d = await apiFetch(`/videos?level=${levels[i]}&limit=500`);
-          const c = d.videos?.length || 4;
+          const c = d.videos?.length || 0;
           document.getElementById(ids[i]).textContent = c;
           total += c;
         }

@@ -133,12 +133,13 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script src="/progress.js"></script>
   <script>
     const LEVEL = 'misc';
-    const DUMMY = [];
 
     const SOFTWARE_PATTERNS = [
       [/davinci/i, 'DAVINCI RESOLVE'],
@@ -198,7 +199,7 @@
       try {
         const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
         renderVideos(d.videos || []);
-      } catch { renderVideos(DUMMY); }
+      } catch { renderVideos([]); }
     }
 
     function renderVideos(videos) {

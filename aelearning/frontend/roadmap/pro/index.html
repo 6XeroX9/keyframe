@@ -241,17 +241,13 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script src="/progress.js"></script>
   <script>
     const LEVEL = 'advanced';
-    const DUMMY = [
-      { id:'p1', title:'Custom Expression Rigs',          creators:{name:'Motion Bro'}, duration:'34:20', youtube_id:'v7by6RLTO_4', tags:['expressions'], technique:'WIGGLE / LOOP' },
-      { id:'p2', title:'C4D Lite + AE Workflow',          creators:{name:'School of Motion'}, duration:'41:00', youtube_id:'HBq_pUJWd7s', tags:['c4d'], technique:'3D PIPELINE' },
-      { id:'p3', title:'Color Science & Grading in AE',   creators:{name:'Cullen Kelly'}, duration:'28:45', youtube_id:'rAVxSCF7gvw', tags:['color'], technique:'LUMETRI / LUT' },
-      { id:'p4', title:'Optical Flares & Real Lens FX',   creators:{name:'Video Copilot'}, duration:'22:30', youtube_id:'Os-oFj4XURM', tags:['optical'], technique:'OPTICAL FX' },
-    ];
 
     function buildRow(v, idx) {
       const div = document.createElement('div');
@@ -318,9 +314,9 @@
     async function loadVideos() {
       try {
         const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
-        const videos = d.videos?.length ? d.videos : DUMMY;
+        const videos = d.videos || [];
         renderVideos(videos);
-      } catch { renderVideos(DUMMY); }
+      } catch { renderVideos([]); }
     }
 
     function renderVideos(videos) {

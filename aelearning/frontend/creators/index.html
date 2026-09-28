@@ -198,19 +198,11 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script>
-    const DUMMY_CREATORS = [
-      { id:'c1', name:'School of Motion',  handle:'@schoolofmotion',  videos:24, playlists:4, specialty:'Motion Design fundamentals, industry-standard workflows.', tags:['motion','workflow'], channel:'YOUTUBE', spotlight:true },
-      { id:'c2', name:'Video Copilot',     handle:'@videocopilot',    videos:18, playlists:3, specialty:'VFX, optical flares, plugins, and element 3D.',          tags:['vfx'],             channel:'YOUTUBE' },
-      { id:'c3', name:'Evan Abrams',       handle:'@evanabrams',      videos:14, playlists:2, specialty:'Fundamentals, 3D camera, and clean technique.',          tags:['motion','workflow'],channel:'YOUTUBE' },
-      { id:'c4', name:'Mt. Mograph',       handle:'@mtmograph',       videos:12, playlists:2, specialty:'Expressions, code-driven animation, and rigging.',       tags:['expressions'],      channel:'YOUTUBE' },
-      { id:'c5', name:'Jake In Motion',    handle:'@jakeinmotion',    videos:10, playlists:1, specialty:'Keyframe timing, easing, and motion principles.',        tags:['motion'],           channel:'YOUTUBE' },
-      { id:'c6', name:'Ukramedia',         handle:'@ukramedia',       videos:9,  playlists:2, specialty:'Text animation, presets, and productivity tips.',        tags:['workflow'],         channel:'YOUTUBE' },
-      { id:'c7', name:'Motion Bro',        handle:'@motionbro',       videos:8,  playlists:1, specialty:'Motion blur, speed, and timing techniques.',             tags:['motion','vfx'],     channel:'YOUTUBE' },
-      { id:'c8', name:'Cullen Kelly',      handle:'@cullenkelly',     videos:7,  playlists:1, specialty:'Color science, grading, and Lumetri workflows.',         tags:['workflow'],         channel:'YOUTUBE' },
-    ];
 
     // Deterministic per-creator gradient — same name always produces the same
     // gradient, so it doesn't shift on every reload, but needs no fetched image.
@@ -296,10 +288,10 @@
     }
 
     async function loadCreators() {
-      let creators = DUMMY_CREATORS;
+      let creators = [];
       try {
         const d = await apiFetch('/creators');
-        if (d.creators?.length) creators = d.creators;
+        creators = d.creators || [];
       } catch {}
 
       const spotlight = creators.find(c => c.spotlight || c.is_featured);
@@ -308,6 +300,7 @@
       buildFilters(creators);
 
       const grid = document.getElementById('creators-grid');
+      if (!creators.length) grid.textContent = 'No creators have been published yet.';
       creators.forEach((c, i) => grid.appendChild(buildCard(c, i)));
       document.getElementById('creator-count').textContent = `${creators.length} EDUCATORS`;
 

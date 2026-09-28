@@ -514,8 +514,10 @@
 
     <!-- BACKUP / RESTORE PANEL -->
     <div class="admin-panel" id="panel-data">
+      <p id="publish-site-status" role="status" style="padding:16px;color:var(--text-secondary)">Save your content changes, then publish to update the public website.</p>
       <div class="panel-header">
         <h2 class="panel-title">BACKUP / RESTORE</h2>
+        <button class="btn-save" id="publish-site-btn">PUBLISH WEBSITE</button>
       </div>
 
       <div class="settings-form">
@@ -552,6 +554,8 @@
   <!-- TOAST CONTAINER -->
   <div id="toast-container"></div>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

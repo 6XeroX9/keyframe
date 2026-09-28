@@ -1,5 +1,5 @@
 /* ─── CONFIG ────────────────────────────────────────────────────────────────── */
-const API = '/api';
+const API = window.KEYFRAME_CONFIG?.apiBase || '/api';
 
 // Apply cached accent immediately — prevents orange flash before API responds
 (function() {
@@ -7,52 +7,12 @@ const API = '/api';
   if (c) document.documentElement.style.setProperty('--accent', c);
 })();
 
-/* ─── DUMMY DATA (fallback when backend is offline) ─────────────────────────── */
-const DUMMY_VIDEOS = {
-  beginner: [
-    { id: 'd1', title: 'After Effects Basics in 30 Minutes', creators: { name: 'Evan Abrams' }, duration: '30:12', youtube_id: 'dHR3tFiCLU4', level: 'beginner' },
-    { id: 'd2', title: 'Understanding Keyframes & Easing', creators: { name: 'Jake In Motion' }, duration: '18:45', youtube_id: 'v7by6RLTO_4', level: 'beginner' },
-    { id: 'd3', title: 'Motion Blur Deep Dive', creators: { name: 'Motion Bro' }, duration: '12:30', youtube_id: 'rAVxSCF7gvw', level: 'beginner' },
-    { id: 'd4', title: 'Text Animation Fundamentals', creators: { name: 'Ukramedia' }, duration: '22:10', youtube_id: 'Os-oFj4XURM', level: 'beginner' },
-  ],
-  intermediate: [
-    { id: 'd5', title: 'Expression Basics: The Wiggle', creators: { name: 'Motion Bro' }, duration: '15:20', youtube_id: 'ycJNSP0HIYM', level: 'intermediate' },
-    { id: 'd6', title: 'Shape Layer Mastery', creators: { name: 'Sonduck Film' }, duration: '28:00', youtube_id: 'E6mUMiU1uNU', level: 'intermediate' },
-    { id: 'd7', title: '3D Camera Techniques in AE', creators: { name: 'Evan Abrams' }, duration: '35:15', youtube_id: 'Mwz9D0g9O2w', level: 'intermediate' },
-    { id: 'd8', title: 'Advanced Masking & Rotoscoping', creators: { name: 'Jake In Motion' }, duration: '41:00', youtube_id: 'x5v1l_kJ17I', level: 'intermediate' },
-  ],
-  advanced: [
-    { id: 'd9',  title: 'Optical Flares & Glow FX', creators: { name: 'Ukramedia' }, duration: '19:30', youtube_id: 'mGGBFnPRy_k', level: 'advanced' },
-    { id: 'd10', title: 'Custom Expressions for Animators', creators: { name: 'Animoplex' }, duration: '26:45', youtube_id: 'wHXMxzXtj7s', level: 'advanced' },
-    { id: 'd11', title: 'Cinema 4D Lite Essentials', creators: { name: 'Greyscalegorilla' }, duration: '44:20', youtube_id: 'i1DCnI7YTFM', level: 'advanced' },
-    { id: 'd12', title: 'Color Science in AE', creators: { name: 'Cullen Kelly' }, duration: '33:10', youtube_id: '3fqM4bGp8dw', level: 'advanced' },
-  ]
-};
-
-const DUMMY_PLAYLISTS = [
-  { id: 'p1', name: 'The AE Starter Pack', creators: { name: 'Evan Abrams' }, video_ids: ['d1','d2','d3','d4'], featured: true },
-  { id: 'p2', name: 'Kinetic Type Bible', creators: { name: 'Ukramedia' }, video_ids: ['d4','d6'], featured: true },
-  { id: 'p3', name: 'Motion for Social Media', creators: { name: 'Motion Bro' }, video_ids: ['d3','d5','d6'], featured: true },
-  { id: 'p4', name: '3D on a Budget', creators: { name: 'Evan Abrams' }, video_ids: ['d7','d11'], featured: true },
-  { id: 'p5', name: 'Mograph in a Week', creators: { name: 'Animoplex' }, video_ids: ['d1','d5','d10'], featured: true },
-  { id: 'p6', name: 'VFX for YouTube', creators: { name: 'Sonduck Film' }, video_ids: ['d8','d9'], featured: true },
-];
-
-const DUMMY_CREATORS = [
-  { id: 'c1', name: 'Evan Abrams', specialty: 'Motion Design', handle: '@evabrams', subscriber_count: '245K' },
-  { id: 'c2', name: 'Jake In Motion', specialty: 'Animation', handle: '@jakeinmotion', subscriber_count: '180K' },
-  { id: 'c3', name: 'Motion Bro', specialty: 'Expressions', handle: '@motionbro', subscriber_count: '320K' },
-  { id: 'c4', name: 'Ukramedia', specialty: 'Text Animation', handle: '@ukramedia', subscriber_count: '290K' },
-  { id: 'c5', name: 'Animoplex', specialty: 'Scripting & Expressions', handle: '@animoplex', subscriber_count: '155K' },
-  { id: 'c6', name: 'Sonduck Film', specialty: 'Compositing & VFX', handle: '@sonduckfilm', subscriber_count: '210K' },
-];
-
 /* ─── THREE.JS HERO ─────────────────────────────────────────────────────────── */
 function getCSSAccent() {
   return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF4D00';
 }
 
-(function initThree() {
+function initThree() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas || typeof THREE === 'undefined') return;
 
@@ -144,7 +104,7 @@ function getCSSAccent() {
 
     renderer.render(scene, camera);
   })();
-})();
+}
 
 /* ─── NAVBAR SCROLL ─────────────────────────────────────────────────────────── */
 const navbar = document.getElementById('navbar');
@@ -213,6 +173,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 /* ─── API HELPERS ───────────────────────────────────────────────────────────── */
 async function apiFetch(path, opts = {}) {
+  if (window.KeyframeCatalog?.supports(path, opts)) return KeyframeCatalog.request(path);
   const token = localStorage.getItem('ae_token');
   const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
   if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -282,18 +243,18 @@ function buildVideoCard(video) {
 /* ─── LOAD ROADMAP ──────────────────────────────────────────────────────────── */
 async function loadRoadmap() {
   const levels = ['beginner', 'intermediate', 'advanced'];
-  for (const level of levels) {
+  await Promise.all(levels.map(async level => {
     const container = document.getElementById(`videos-${level}`);
     try {
       const data = await apiFetch(`/videos?level=${level}&limit=4`);
-      const videos = data.videos?.length ? data.videos : DUMMY_VIDEOS[level];
+      const videos = data.videos || [];
       container.innerHTML = '';
       videos.forEach(v => container.appendChild(buildVideoCard(v)));
     } catch {
       container.innerHTML = '';
-      DUMMY_VIDEOS[level].forEach(v => container.appendChild(buildVideoCard(v)));
+      container.textContent = 'Tutorials are temporarily unavailable. Please reload.';
     }
-  }
+  }));
 }
 
 /* ─── LOAD PLAYLISTS ────────────────────────────────────────────────────────── */
@@ -346,12 +307,12 @@ async function loadPlaylists() {
   const row = document.getElementById('playlists-row');
   try {
     const data = await apiFetch('/playlists?featured=true');
-    const playlists = data.playlists?.length ? data.playlists : DUMMY_PLAYLISTS;
+    const playlists = data.playlists || [];
     row.innerHTML = '';
     playlists.forEach((pl, i) => row.appendChild(buildPlaylistCard(pl, i)));
   } catch {
     row.innerHTML = '';
-    DUMMY_PLAYLISTS.forEach((pl, i) => row.appendChild(buildPlaylistCard(pl, i)));
+    row.textContent = 'Playlists are temporarily unavailable. Please reload.';
   }
   initDragScroll(row);
 }
@@ -380,7 +341,7 @@ function buildCreatorPill(creator) {
   div.className = 'creator-pill';
   const initials = creator.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const avatar = creator.avatar_url
-    ? `<img src="${escHtml(creator.avatar_url)}" alt="" onerror="this.remove();this.parentElement.textContent='${initials}';">`
+    ? `<img src="${escHtml(creator.avatar_url)}" loading="lazy" decoding="async" alt="" onerror="this.remove();this.parentElement.textContent='${initials}';">`
     : initials;
   div.innerHTML = `
     <div class="cp-avatar">${avatar}</div>
@@ -414,7 +375,7 @@ function fillMarqueeRow(trackId, creators) {
 }
 
 async function loadCreators() {
-  let pool = DUMMY_CREATORS;
+  let pool = [];
   try {
     const data = await apiFetch('/creators');
     if (data.creators?.length) pool = data.creators;
@@ -776,6 +737,12 @@ function escHtml(str) {
 /* ─── INIT ──────────────────────────────────────────────────────────────────── */
 (function init() {
   renderNavAuth();
+  // Content starts loading before the decorative WebGL library is downloaded.
+  const threeScript = document.createElement('script');
+  threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  threeScript.async = true;
+  threeScript.onload = () => { try { initThree(); } catch { /* The page works without WebGL. */ } };
+  document.head.appendChild(threeScript);
   loadSettings();
   loadRoadmap();
   loadPlaylists();

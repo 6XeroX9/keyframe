@@ -597,4 +597,23 @@ function extractYoutubeId(url) {
   return match ? match[1] : null;
 }
 
+// Publish a new static catalog using the Cloudflare Pages deploy hook.
+router.post('/publish', async (req, res) => {
+  const hook = process.env.CLOUDFLARE_DEPLOY_HOOK;
+  if (!hook) return res.status(503).json({ error: 'Publishing is not configured yet. Add the Cloudflare deploy hook to the server environment.' });
+  try {
+    const url = new URL(hook);
+    if (url.protocol !== 'https:' || url.hostname !== 'api.cloudflare.com' || !url.pathname.startsWith('/client/v4/pages/webhooks/deploy_hooks/')) {
+      return res.status(500).json({ error: 'The configured publish hook is invalid.' });
+    }
+    const response = await fetch(url, { method: 'POST', signal: AbortSignal.timeout(15000), redirect: 'error' });
+    if (!response.ok) throw new Error('Publish request failed');
+    const result = await response.json();
+    if (result.success !== true) throw new Error('Publish request failed');
+    return res.json({ queued: true, message: 'Publish requested. The new content goes live after the Cloudflare build succeeds.' });
+  } catch {
+    return res.status(502).json({ error: 'Could not confirm the publish request. Check Cloudflare deployments before retrying.' });
+  }
+});
+
 module.exports = router;

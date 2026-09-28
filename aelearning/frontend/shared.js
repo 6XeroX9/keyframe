@@ -1,5 +1,5 @@
 /* ─── SHARED UTILITIES FOR ALL INNER PAGES ──────────────────────────────────── */
-const API = '/api';
+const API = window.KEYFRAME_CONFIG?.apiBase || '/api';
 
 // Apply cached accent immediately — prevents orange flash on page load
 (function() {
@@ -16,6 +16,7 @@ function getUser()  { try { return JSON.parse(localStorage.getItem('ae_user')); 
 function getToken() { return localStorage.getItem('ae_token'); }
 
 async function apiFetch(path, opts = {}) {
+  if (window.KeyframeCatalog?.supports(path, opts)) return KeyframeCatalog.request(path);
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;

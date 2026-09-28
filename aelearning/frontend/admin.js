@@ -1,5 +1,5 @@
 /* ─── CONFIG ────────────────────────────────────────────────────────────────── */
-const API = '/api';
+const API = window.KEYFRAME_CONFIG?.apiBase || '/api';
 
 // Apply cached accent immediately — prevents orange flash on admin page load
 (function() {
@@ -1044,3 +1044,15 @@ function loadDataPanel() {
   loadDashboard();
 
 })();
+
+document.getElementById('publish-site-btn')?.addEventListener('click', async () => {
+  const button = document.getElementById('publish-site-btn');
+  const status = document.getElementById('publish-site-status');
+  button.disabled = true;
+  status.textContent = 'Requesting publication…';
+  try {
+    const result = await apiFetch('/admin/publish', { method:'POST' });
+    status.textContent = result.message;
+  } catch (error) { status.textContent = error.message; }
+  finally { button.disabled = false; }
+});

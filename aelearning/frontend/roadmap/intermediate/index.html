@@ -226,17 +226,13 @@
     </div>
   </footer>
 
+  <script src="/site-config.js"></script>
+  <script src="/catalog-client.js"></script>
   <script src="/shared.js"></script>
   <script src="/search-widget.js"></script>
   <script src="/progress.js"></script>
   <script>
     const LEVEL = 'intermediate';
-    const DUMMY = [
-      { id:'i1', title:'Expressions Crash Course',        creators:{name:'Mt. Mograph'}, duration:'24:30', youtube_id:'HBq_pUJWd7s', tags:['expressions'], diff:'INTERMEDIATE' },
-      { id:'i2', title:'Shape Layer Mastery',             creators:{name:'School of Motion'}, duration:'31:15', youtube_id:'9KKhfXJo-zg', tags:['shapes'], diff:'INTERMEDIATE' },
-      { id:'i3', title:'3D Camera Techniques',            creators:{name:'Evan Abrams'}, duration:'19:45', youtube_id:'UeJeq4PBXLA', tags:['3d'], diff:'MID-HARD' },
-      { id:'i4', title:'Advanced Masking & Rotobrush',    creators:{name:'Video Copilot'}, duration:'27:00', youtube_id:'wX0V3qCMcnk', tags:['masking'], diff:'INTERMEDIATE' },
-    ];
 
     function buildRow(v, idx) {
       const div = document.createElement('div');
@@ -303,9 +299,9 @@
     async function loadVideos() {
       try {
         const d = await apiFetch(`/videos?level=${LEVEL}&limit=500`);
-        const videos = d.videos?.length ? d.videos : DUMMY;
+        const videos = d.videos || [];
         renderVideos(videos);
-      } catch { renderVideos(DUMMY); }
+      } catch { renderVideos([]); }
     }
 
     function renderVideos(videos) {

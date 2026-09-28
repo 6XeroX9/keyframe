@@ -608,7 +608,7 @@ async function loadSettings() {
     const s = data.settings;
     if (s.hero_line1 || s.hero_line2) {
       const h = document.querySelector('.hero-headline');
-      if (h) h.innerHTML = `${escHtml(s.hero_line1 || 'MASTER')}<br>${escHtml(s.hero_line2 || 'AFTER EFFECTS')}<span class="accent">.</span>`;
+      if (h) h.innerHTML = `${escHtml(s.hero_line1 || 'MASTER')}<br>${escHtml((s.hero_line2 || 'AFTER EFFECTS').replace(/[.!]+$/, ''))}<span class="accent">.</span>`;
     }
     if (s.marquee_text) {
       document.querySelectorAll('.marquee-track span').forEach(el => { el.textContent = s.marquee_text + ' '; });
@@ -707,23 +707,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
-/* ─── FAQ ACCORDION ─────────────────────────────────────────────────────────── */
-document.querySelectorAll('.faq-item').forEach(item => {
-  const q = item.querySelector('.faq-q');
-  const a = item.querySelector('.faq-a');
-  q.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(other => {
-      if (other !== item) {
-        other.classList.remove('open');
-        other.querySelector('.faq-a').style.maxHeight = null;
-      }
-    });
-    item.classList.toggle('open', !isOpen);
-    a.style.maxHeight = isOpen ? null : `${a.scrollHeight}px`;
-  });
-});
-
 /* ─── HELPER ────────────────────────────────────────────────────────────────── */
 function escHtml(str) {
   if (!str) return '';
@@ -742,7 +725,7 @@ function escHtml(str) {
   threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
   threeScript.async = true;
   threeScript.onload = () => { try { initThree(); } catch { /* The page works without WebGL. */ } };
-  document.head.appendChild(threeScript);
+  if (document.getElementById('hero-canvas')) document.head.appendChild(threeScript);
   loadSettings();
   loadRoadmap();
   loadPlaylists();

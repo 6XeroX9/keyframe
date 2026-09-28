@@ -397,6 +397,15 @@ const modalLevel = document.getElementById('modal-level');
 const modalYoutubeLink = document.getElementById('modal-youtube-link');
 
 function openVideoModal(video) {
+  const frame = document.getElementById('modal-iframe');
+  let notice = document.getElementById('embed-notice');
+  if (!notice) { notice = document.createElement('p'); notice.id = 'embed-notice'; notice.style.padding = '24px'; frame.parentElement.after(notice); }
+  frame.parentElement.hidden = video.embeddable === false;
+  frame.parentElement.style.display = video.embeddable === false ? 'none' : '';
+  notice.hidden = video.embeddable !== false;
+  notice.textContent = 'This creator allows playback on YouTube only. Use WATCH ON YOUTUBE below.';
+  frame.src = '';
+
   const ytId = video.youtube_id || video.dataset?.youtubeId;
   modalTitle.textContent = video.title;
   modalCreator.textContent = video.creators?.name || '';
@@ -405,7 +414,7 @@ function openVideoModal(video) {
   if (modalYoutubeLink) {
     modalYoutubeLink.href = video.youtube_url || (ytId ? `https://www.youtube.com/watch?v=${ytId}` : '#');
   }
-  if (ytId) {
+  if (ytId && video.embeddable !== false) {
     modalIframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
   }
   videoModal.classList.add('open');

@@ -1,5 +1,6 @@
+const { curate } = require('./curate-catalog.cjs');
 const FIELDS = {
-  videos: 'id,title,youtube_url,youtube_id,creator_id,level,description,tags,duration,sort_order,created_at',
+  videos: 'id,title,youtube_url,youtube_id,creator_id,level,description,tags,duration,sort_order,created_at,embeddable',
   creators: 'id,name,specialty,youtube_url,handle,subscriber_count,avatar_url,banner_url,created_at',
   playlists: 'id,name,description,creator_id,video_ids,featured,youtube_playlist_url,created_at',
   courses: 'id,title,educator,description,price,affiliate_url,thumbnail_url,active,created_at'
@@ -23,6 +24,7 @@ function makeCatalog(tables) {
   for (const name of [...Object.keys(FIELDS), 'settings']) {
     if (!Array.isArray(tables[name])) throw new Error(`Missing ${name} data; refusing an incomplete publication.`);
   }
+  tables = curate(tables);
   const videos = tables.videos.map(v => pick(v, FIELDS.videos));
   videos.sort((a,b) => (a.sort_order ?? Infinity) - (b.sort_order ?? Infinity)
     || String(b.created_at || '').localeCompare(String(a.created_at || '')));

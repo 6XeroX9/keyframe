@@ -310,7 +310,7 @@
     ];
 
     function moduleOf(v) {
-      return (v.tags || []).find(t => t.includes(' ')) || 'General';
+      return (v.tags || []).find(t => t.includes(' ') || ['Expressions', 'VFX', 'International'].includes(t)) || 'General';
     }
 
     async function loadVideos() {

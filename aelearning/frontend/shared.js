@@ -88,11 +88,20 @@ function initVideoModal() {
 }
 
 function openModal(video) {
+  const frame = document.getElementById('modal-iframe');
+  let notice = document.getElementById('embed-notice');
+  if (!notice) { notice = document.createElement('p'); notice.id = 'embed-notice'; notice.style.padding = '24px'; frame.parentElement.after(notice); }
+  frame.parentElement.hidden = video.embeddable === false;
+  frame.parentElement.style.display = video.embeddable === false ? 'none' : '';
+  notice.hidden = video.embeddable !== false;
+  notice.textContent = 'This creator allows playback on YouTube only. Use WATCH ON YOUTUBE below.';
+  frame.src = '';
+
   document.getElementById('modal-title').textContent   = video.title || '';
   document.getElementById('modal-creator').textContent = video.creators?.name || '';
   document.getElementById('modal-duration').textContent = video.duration || '';
   document.getElementById('modal-level').textContent   = video.level || '';
-  if (video.youtube_id) document.getElementById('modal-iframe').src = `https://www.youtube.com/embed/${video.youtube_id}?autoplay=1`;
+  if (video.youtube_id && video.embeddable !== false) document.getElementById('modal-iframe').src = `https://www.youtube.com/embed/${video.youtube_id}?autoplay=1`;
   const ytLink = document.getElementById('modal-youtube-link');
   if (ytLink) ytLink.href = video.youtube_url || (video.youtube_id ? `https://www.youtube.com/watch?v=${video.youtube_id}` : '#');
   document.getElementById('video-modal').classList.add('open');

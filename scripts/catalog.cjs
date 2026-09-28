@@ -20,11 +20,11 @@ const TAGS = {
 function pick(row, fields) {
   return Object.fromEntries(fields.split(',').filter(k => row[k] !== undefined).map(k => [k,row[k]]));
 }
-function makeCatalog(tables) {
+function makeCatalog(tables, options) {
   for (const name of [...Object.keys(FIELDS), 'settings']) {
     if (!Array.isArray(tables[name])) throw new Error(`Missing ${name} data; refusing an incomplete publication.`);
   }
-  tables = curate(tables);
+  tables = curate(tables, options);
   const videos = tables.videos.map(v => pick(v, FIELDS.videos));
   videos.sort((a,b) => (a.sort_order ?? Infinity) - (b.sort_order ?? Infinity)
     || String(b.created_at || '').localeCompare(String(a.created_at || '')));
@@ -75,3 +75,4 @@ async function readTables(env = process.env, request = fetch) {
   return Object.fromEntries(entries);
 }
 module.exports = { makeCatalog, readTables };
+

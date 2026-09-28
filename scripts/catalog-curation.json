@@ -2731,5 +2731,297 @@
         "specialty": "Motion design"
       }
     }
+  ],
+  "additions": {
+    "creators": [
+      {
+        "id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "name": "Animation Explained",
+        "youtube_url": "https://www.youtube.com/channel/UChf4MDszi2Jejbfx0XV_PHQ",
+        "specialty": "Motion design"
+      },
+      {
+        "id": "youtube-UCVGvFC28R5mgn-z_x4QX3pw",
+        "name": "MiddyAtif",
+        "youtube_url": "https://www.youtube.com/channel/UCVGvFC28R5mgn-z_x4QX3pw",
+        "specialty": "Motion design"
+      },
+      {
+        "id": "youtube-UCoNts4YnknfNoRidUhYE8Ow",
+        "name": "Animators Oasis: Motion Design & After Effects ",
+        "youtube_url": "https://www.youtube.com/channel/UCoNts4YnknfNoRidUhYE8Ow",
+        "specialty": "Motion design"
+      },
+      {
+        "id": "youtube-UCYK0C3K9RYJIN0iKo8i8CIw",
+        "name": "TipTut",
+        "youtube_url": "https://www.youtube.com/channel/UCYK0C3K9RYJIN0iKo8i8CIw",
+        "specialty": "Motion design"
+      }
+    ],
+    "videos": [
+      {
+        "id": "curated-h6C0xm2dCnw",
+        "youtube_id": "h6C0xm2dCnw",
+        "youtube_url": "https://www.youtube.com/watch?v=h6C0xm2dCnw",
+        "title": "Get Started in Adobe After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 1: Interface & Setup"
+        ],
+        "duration": "8:11",
+        "embeddable": true,
+        "description": "Create a composition and get comfortable with the workspace. Practice: Make a five-second composition. Add a solid, rename it, and save your project. Before you start: No experience needed. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 0
+      },
+      {
+        "id": "curated-gLFSmNKP39o",
+        "youtube_id": "gLFSmNKP39o",
+        "youtube_url": "https://www.youtube.com/watch?v=gLFSmNKP39o",
+        "title": "Import and Organize Files in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 1: Interface & Setup"
+        ],
+        "duration": "4:38",
+        "embeddable": true,
+        "description": "Import media without turning your project into a pile of missing files. Practice: Create folders for footage, audio, and compositions. Import one image and rename it. Before you start: After lesson 01. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 1
+      },
+      {
+        "id": "curated-E5XHFfK_CV4",
+        "youtube_id": "E5XHFfK_CV4",
+        "youtube_url": "https://www.youtube.com/watch?v=E5XHFfK_CV4",
+        "title": "Setting Keyframes to Create Animations in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "14:25",
+        "embeddable": true,
+        "description": "Understand keyframes, timing, and spacing. Practice: Animate a square from left to right. Move the second keyframe closer and compare the speed. Before you start: After lessons 01–02. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 2
+      },
+      {
+        "id": "curated--4XKeXNmtA8",
+        "youtube_id": "-4XKeXNmtA8",
+        "youtube_url": "https://www.youtube.com/watch?v=-4XKeXNmtA8",
+        "title": "Adjust Anchor Points in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "7:00",
+        "embeddable": true,
+        "description": "Understand why a layer rotates or scales from the wrong place. Practice: Rotate a rectangle around its center, then around its bottom edge. Compare the results. Before you start: After lesson 03. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 3
+      },
+      {
+        "id": "curated-FPy3BKdQElE",
+        "youtube_id": "FPy3BKdQElE",
+        "youtube_url": "https://www.youtube.com/watch?v=FPy3BKdQElE",
+        "title": "Graph Editor for Beginners – After Effects Tutorial That Actually Makes Sense",
+        "creator_id": "youtube-UCVGvFC28R5mgn-z_x4QX3pw",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "13:00",
+        "embeddable": true,
+        "description": "Compare the speed and value graphs and shape your easing. Practice: Make three versions of the same move: linear, Easy Ease, and a custom curve. Before you start: Comfortable setting keyframes. Includes an AEJuice sponsor segment. Focus on the built-in Graph Editor lesson.",
+        "sort_order": 4
+      },
+      {
+        "id": "curated-mKvYoLU1gIo",
+        "youtube_id": "mKvYoLU1gIo",
+        "youtube_url": "https://www.youtube.com/watch?v=mKvYoLU1gIo",
+        "title": "Animate Shape Layers in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "15:47",
+        "embeddable": true,
+        "description": "Work with fills, strokes, paths, and shape transforms. Practice: Draw a simple line icon and animate its stroke appearing. Use only native shape tools. Before you start: After lessons 03–04. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 5
+      },
+      {
+        "id": "curated-37nPb64Xluk",
+        "youtube_id": "37nPb64Xluk",
+        "youtube_url": "https://www.youtube.com/watch?v=37nPb64Xluk",
+        "title": "Animating Text in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "7:04",
+        "embeddable": true,
+        "description": "Create, style, and animate a text layer. Practice: Animate your name into frame. Make a second version with a different entrance. Before you start: After lesson 03. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 6
+      },
+      {
+        "id": "curated-1_B4Tdkmz-o",
+        "youtube_id": "1_B4Tdkmz-o",
+        "youtube_url": "https://www.youtube.com/watch?v=1_B4Tdkmz-o",
+        "title": "Parent Layers & Properties in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 2: Core Animation Skills"
+        ],
+        "duration": "6:20",
+        "embeddable": true,
+        "description": "Use parenting and nulls to control a group of layers. Practice: Parent a title and two shapes to one null. Move the group while retaining their own animation. Before you start: After lessons 03–04. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 7
+      },
+      {
+        "id": "curated-VOV4zs87xOU",
+        "youtube_id": "VOV4zs87xOU",
+        "youtube_url": "https://www.youtube.com/watch?v=VOV4zs87xOU",
+        "title": "Create & Animate Masks in After Effects - AE Fundamantals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "7:03",
+        "embeddable": true,
+        "description": "Create and animate masks to control a layer’s visibility. Practice: Reveal a word with an animated rectangular mask. Try changing the feather. Before you start: After lessons 03 and 06. Video interfaces may look different from your version of After Effects.",
+        "sort_order": 8
+      },
+      {
+        "id": "curated-UCtM-0Q28cs",
+        "youtube_id": "UCtM-0Q28cs",
+        "youtube_url": "https://www.youtube.com/watch?v=UCtM-0Q28cs",
+        "title": "Create & Animate Mattes in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "12:37",
+        "embeddable": true,
+        "description": "Use alpha and luma mattes, including the newer matte controls. Practice: Reveal a title with a separate shape layer, then animate the title independently. Before you start: After lesson 09. Uses the track matte controls introduced in After Effects 2023.",
+        "sort_order": 9
+      },
+      {
+        "id": "curated-y4KXKiRq714",
+        "youtube_id": "y4KXKiRq714",
+        "youtube_url": "https://www.youtube.com/watch?v=y4KXKiRq714",
+        "title": "How to Render Video Files in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "10:58",
+        "embeddable": true,
+        "description": "Understand the render queue, formats, and transparency. Practice: Export your five-second animation as an MP4 and play it outside After Effects. Before you start: Have a short animation ready. Direct H.264 export shown is for After Effects 2023 or newer. Older versions use Media Encoder.",
+        "sort_order": 10
+      },
+      {
+        "id": "curated-sM6mH20ItHY",
+        "youtube_id": "sM6mH20ItHY",
+        "youtube_url": "https://www.youtube.com/watch?v=sM6mH20ItHY",
+        "title": "Effects in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "15:14",
+        "embeddable": true,
+        "description": "Practice applying, adjusting and animating native effects. Practice: Animate a blur, then use one adjustment layer to affect two shapes. Before you start: After keyframes and layers. Optional practice after the core lessons; interface details may differ by AE version.",
+        "sort_order": 11
+      },
+      {
+        "id": "curated-qV3KXRrGm-A",
+        "youtube_id": "qV3KXRrGm-A",
+        "youtube_url": "https://www.youtube.com/watch?v=qV3KXRrGm-A",
+        "title": "Animating Artwork from Adobe Illustrator in After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "26:32",
+        "embeddable": true,
+        "description": "Learn how to prepare, import and revise layered vector artwork. Practice: Prepare a two-layer icon, import it as a composition and animate its parts. Before you start: Comfortable with layers and parenting; Adobe Illustrator access. Optional workflow requiring Illustrator. The final Overlord segment covers a paid extension; the lesson also covers standard file import.",
+        "sort_order": 12
+      },
+      {
+        "id": "curated-7I6xZQgVnAU",
+        "youtube_id": "7I6xZQgVnAU",
+        "youtube_url": "https://www.youtube.com/watch?v=7I6xZQgVnAU",
+        "title": "3 Ways to Export GIFs from After Effects - AE Fundamentals",
+        "creator_id": "youtube-UChf4MDszi2Jejbfx0XV_PHQ",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "11:34",
+        "embeddable": true,
+        "description": "Compare GIF export methods and their tradeoffs. Practice: Export a short animation as a GIF and compare its size and quality with your video. Before you start: Complete the video-export lesson first. Optional: requires Media Encoder or Photoshop for the demonstrated standard workflows. GifGun is a paid alternative, not a requirement.",
+        "sort_order": 13
+      },
+      {
+        "id": "curated-CwNumopfYxE",
+        "youtube_id": "CwNumopfYxE",
+        "youtube_url": "https://www.youtube.com/watch?v=CwNumopfYxE",
+        "title": "After Effects Tutorial: SUPER EASY Grid Animation!",
+        "creator_id": "youtube-UCoNts4YnknfNoRidUhYE8Ow",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "5:01",
+        "embeddable": true,
+        "description": "Apply core animation skills in a focused five-minute practice project. Practice: Build a simple animated grid, then change the timing and colours to make it your own. Before you start: Comfortable with shape layers, keyframes and easing. A practice project after the foundations, not a replacement for learning keyframes.",
+        "sort_order": 14
+      },
+      {
+        "id": "curated-ROw_Xnmg2W4",
+        "youtube_id": "ROw_Xnmg2W4",
+        "youtube_url": "https://www.youtube.com/watch?v=ROw_Xnmg2W4",
+        "title": "Complete Intro to Motion Design | FULL AFTER EFFECTS COURSE",
+        "creator_id": "youtube-UCYK0C3K9RYJIN0iKo8i8CIw",
+        "level": "beginner",
+        "tags": [
+          "Module 3: First Real Skills"
+        ],
+        "duration": "135:12",
+        "embeddable": true,
+        "description": "Follow a longer motion-design project with text, shapes, and animation. Practice: Work through one chapter at a time. Then change the type, colors, and timing to make your own version. Before you start: Complete the foundations first. A longer follow-up project, not a first-day introduction. Set aside several practice sessions.",
+        "sort_order": 15
+      }
+    ]
+  },
+  "beginnerOrder": [
+    "h6C0xm2dCnw",
+    "gLFSmNKP39o",
+    "E5XHFfK_CV4",
+    "-4XKeXNmtA8",
+    "FPy3BKdQElE",
+    "mKvYoLU1gIo",
+    "37nPb64Xluk",
+    "1_B4Tdkmz-o",
+    "VOV4zs87xOU",
+    "UCtM-0Q28cs",
+    "y4KXKiRq714",
+    "sM6mH20ItHY",
+    "qV3KXRrGm-A",
+    "7I6xZQgVnAU",
+    "CwNumopfYxE",
+    "hb2bbfiNBXA",
+    "cxqHMp2th8I",
+    "9anmdLHV_DA",
+    "uP04ZEO7KO4",
+    "ROw_Xnmg2W4"
   ]
 }

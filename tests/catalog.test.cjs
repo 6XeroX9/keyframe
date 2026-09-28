@@ -3,7 +3,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const { makeCatalog, readTables } = require('../scripts/catalog.cjs');
+const { makeCatalog: publishCatalog, readTables } = require('../scripts/catalog.cjs');
+const makeCatalog = tables => publishCatalog(tables, { includeAdditions:false });
 const client = require('../aelearning/frontend/catalog-client.js');
 function tables() {
   return {
@@ -79,3 +80,4 @@ test('all frontend scripts and inline page scripts parse', () => {
     }
   }
 });
+

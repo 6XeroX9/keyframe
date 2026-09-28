@@ -1,5 +1,6 @@
-const test=require('node:test'),assert=require('node:assert/strict');const {curate}=require('../scripts/curate-catalog.cjs');
+const test=require('node:test'),assert=require('node:assert/strict');const {curate:publish}=require('../scripts/curate-catalog.cjs');const curate=t=>publish(t,{includeAdditions:false});
 function data(ids){return {videos:ids.map((id,i)=>({id,youtube_id:id,title:id,level:'advanced',sort_order:i,tags:[]})),creators:[],playlists:[]};}
 test('numbered series become ascending and repeated builds are idempotent',()=>{const ids=['XNLHwXb5bMQ','GJw01sU_HS8','6In4U9Wb29U','hezZiay9gpw','fLoVccro0Mw'];const c=curate(data(ids));assert.deepEqual([...c.videos].sort((a,b)=>a.sort_order-b.sort_order).map(v=>v.youtube_id),[...ids].reverse());assert.deepEqual(curate(c),c);});
 test('unavailable records and dangling playlist references are excluded',()=>{const d=data(['0TIsox3Knj8','udxadt6CvCE','hb2bbfiNBXA']);d.playlists=[{video_ids:['0TIsox3Knj8','hb2bbfiNBXA','absent']}];const c=curate(d);assert.equal(c.videos.length,1);assert.deepEqual(c.playlists[0].video_ids,['hb2bbfiNBXA']);assert.equal(c.videos[0].level,'beginner');});
 test('software, playback restrictions and credit corrections are published',()=>{const c=curate(data(['_uzHwNjwcU4','mJPQxF43nmM','nYnjA3oJRG8']));assert.equal(c.videos.find(v=>v.youtube_id==='_uzHwNjwcU4').level,'misc');assert.equal(c.videos.find(v=>v.youtube_id==='mJPQxF43nmM').embeddable,false);assert.equal(c.creators.find(x=>x.id===c.videos.find(v=>v.youtube_id==='nYnjA3oJRG8').creator_id).name,'SEO VIDEO SNIPER');});
+
